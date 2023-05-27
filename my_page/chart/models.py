@@ -74,27 +74,6 @@ class AuthUserUserPermissions(models.Model):
         unique_together = (('user', 'permission'),)
 
 
-class Brands(models.Model):
-    company_name = models.CharField(primary_key=True, blank=True, null=True)
-    company_size = models.IntegerField(blank=True, null=True)
-    company_url = models.CharField(blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'brands'
-
-
-class BrandsOffice(models.Model):
-    slug = models.CharField(primary_key=True, blank=True, null=True)
-    company_name = models.CharField(blank=True, null=True)
-    office = models.CharField(blank=True, null=True)
-    id = models.CharField(blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'brands_office'
-
-
 class DjangoAdminLog(models.Model):
     object_id = models.TextField(blank=True, null=True)
     object_repr = models.CharField(max_length=200)
@@ -138,41 +117,55 @@ class DjangoSession(models.Model):
         managed = False
         db_table = 'django_session'
 
-
 class EmploymentTypes(models.Model):
-    id = models.CharField(blank=True, null=True)
-    type = models.CharField(blank=True, null=True)
-    from_salary = models.IntegerField(blank=True, null=True)
-    to_salary = models.IntegerField(blank=True, null=True)
-    currency = models.CharField(blank=True, null=True)
+    employment_type_id = models.CharField(primary_key=True, max_length=300)
+    type = models.CharField(max_length=100)
+    from_salary = models.IntegerField()
+    to_salary = models.IntegerField()
+    currency = models.CharField(max_length=10)
 
     class Meta:
         managed = False
         db_table = 'employment_types'
 
+class Skills(models.Model):
+    skill_id = models.CharField(primary_key=True, max_length=300)
+    name = models.CharField(max_length=50)
+    level = models.IntegerField()
+
+    class Meta:
+        managed = False
+        db_table = 'skills'
+
 
 class Offers(models.Model):
-    id = models.CharField(primary_key=True, blank=True, null=True)
-    published_at = models.DateField(blank=True, null=True)
-    title = models.CharField(blank=True, null=True)
-    marker_icon = models.CharField(blank=True, null=True)
-    experience_level = models.CharField(blank=True, null=True)
-    city = models.CharField(blank=True, null=True)
-    country_code = models.CharField(blank=True, null=True)
-    remote = models.CharField(blank=True, null=True)
-    workplace_type = models.CharField(blank=True, null=True)
-    company_name = models.CharField(blank=True, null=True)
+    offer_id = models.CharField(primary_key=True, max_length=300)
+    published_at = models.DateField()
+    title = models.CharField(max_length=100)
+    marker_icon = models.CharField(max_length=100)
+    experience_level = models.CharField(max_length=50)
+    city = models.CharField(max_length=100)
+    country_code = models.CharField(max_length=10)
+    remote = models.CharField(max_length=50)
+    workplace_type = models.CharField(max_length=50)
+    company_name = models.CharField(max_length=250)
+    employment_types = models.ManyToManyField(EmploymentTypes, related_name='offers')
+    skills = models.ManyToManyField(Skills, related_name='offers')
+    brands_offices = models.ManyToManyField('BrandsOffice', related_name='offers')
+
 
     class Meta:
         managed = False
         db_table = 'offers'
 
 
-class Skills(models.Model):
-    id = models.CharField(blank=True, null=True)
-    name = models.CharField(blank=True, null=True)
-    level = models.IntegerField(blank=True, null=True)
+
+class BrandsOffice(models.Model):
+    slug = models.CharField(primary_key=True, max_length=300)
+    company_name = models.CharField(max_length=250)
+    office = models.CharField(max_length=100)
+    id = models.CharField(max_length=300)
 
     class Meta:
         managed = False
-        db_table = 'skills'
+        db_table = 'brands_office'
