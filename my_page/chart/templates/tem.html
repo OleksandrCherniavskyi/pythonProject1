@@ -7,16 +7,14 @@
     <th>Published Date</th>
     <th>Offers Title</th>
   </tr>
-  {% for x in all_offers %}
-    <tr>
-      <td>{{ x.offer_id }}</td>
-        <td>{{ x.published_at }}</td>
-      <td>{{ x.title }}</td>
-    </tr>
+  {% for x in myoffers %}
+  <tr>
+    <td>{{ x.id }}</td>
+    <td>{{ x.published_at }}</td>
+    <td>{{ x.title }}</td>
+  </tr>
   {% endfor %}
 </table>
-
-<p>In views.py you can see how to import and fetch members from the database.</p>
 
 </body>
 </html>

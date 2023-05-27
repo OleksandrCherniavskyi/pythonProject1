@@ -139,7 +139,8 @@ class Skills(models.Model):
 
 
 class Offers(models.Model):
-    offer_id = models.CharField(primary_key=True, max_length=300)
+    objects = models.Manager()
+    id = models.CharField(primary_key=True, max_length=300)
     published_at = models.DateField()
     title = models.CharField(max_length=100)
     marker_icon = models.CharField(max_length=100)
