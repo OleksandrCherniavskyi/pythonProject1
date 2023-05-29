@@ -1,0 +1,14 @@
+{% block content %}
+    <table border='1'>
+      <tr>
+        <th>City</th>
+        <th>Position</th>
+      </tr>
+      {% for city in top_city %}
+        <tr>
+          <td>{{ city.city }}</td>
+          <td>{{ city.city_count }}</td>
+        </tr>
+      {% endfor %}
+    </table>
+{% endblock content %}
