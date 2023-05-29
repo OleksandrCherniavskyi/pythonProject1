@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<table border='1'>
+  <tr>
+    <th>Skill</th>
+    <th>Skill Count</th>
+    <th>Average Level</th>
+  </tr>
+  {% for skill in top_skills %}
+    <tr>
+      <td>{{ skill.name }}</td>
+      <td>{{ skill.skill_count }}</td>
+      <td>{{ skill.avg_level }}</td>
+    </tr>
+  {% endfor %}
+</table>
+{% endblock content %}

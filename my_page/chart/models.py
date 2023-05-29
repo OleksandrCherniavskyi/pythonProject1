@@ -129,6 +129,7 @@ class EmploymentTypes(models.Model):
         db_table = 'employment_types'
 
 class Skills(models.Model):
+    objects = models.Manager()
     skill_id = models.CharField(primary_key=True, max_length=300)
     name = models.CharField(max_length=50)
     level = models.IntegerField()

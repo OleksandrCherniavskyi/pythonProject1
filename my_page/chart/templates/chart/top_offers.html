@@ -1,0 +1,11 @@
+
+
+    {% block content %}
+        <h1>Top 7 Offers</h1>
+        <ul>
+            {% for offer in top_offers %}
+                <li>{{ offer.title }} (Count: {{ offer.title_count }})</li>
+            {% endfor %}
+        </ul>
+
+    {% endblock content %}
