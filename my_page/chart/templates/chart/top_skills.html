@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+
 
 {% block content %}
 <table border='1'>
@@ -15,4 +15,43 @@
     </tr>
   {% endfor %}
 </table>
+
+
+<div class="chart-container">
+  <canvas id="chart2"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Include Chart.js library -->
+
+<script>
+  const data = {
+    datasets: [{
+      label: 'Top Skills',
+      data: [
+        {% for skill in top_skills %}
+          { x: {{ skill.skill_count }}, y: {{ skill.avg_level }}, r: 15 },
+        {% endfor %}
+      ],
+      backgroundColor: 'rgb(255, 99, 132)'
+    }]
+  },
+
+
+  const config = {
+    type: 'bubble',
+    data: data,
+    options: {
+      scales: {
+        y: {
+          beginAtZero: True
+        }
+      }
+    }
+  };
+
+  const ctx = document.getElementById('chart2').getContext('2d');
+  new Chart(ctx, config);
+</script>
+
+
 {% endblock content %}
