@@ -1,0 +1,21 @@
+.container {
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+}
+
+.header {
+  padding: 10px;
+  cursor: pointer;
+  background-color: #f0f0f0;
+}
+
+.content {
+  padding: 10px;
+  display: none;
+}
+
+.expand-icon {
+  float: right;
+  font-weight: bold;
+}
+

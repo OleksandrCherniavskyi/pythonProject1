@@ -1,23 +1,47 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<style>
-  .chart-container {
-    width: 100%;
-    height: 400px;
-    margin-bottom: 20px; /* Add spacing between the charts */
-  }
-</style>
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/main.css' %}">
+<script src="{% static 'js/main.js' %}"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 
 
-{% include 'chart/top_offers.html' %}
+<div class="container">
+  <div class="header" onclick="toggleContent(this)">
+    Container 1
+    <span class="expand-icon">+</span>
+  </div>
+  <div class="content">
+    {% include 'chart/top_offers.html' %}
+  </div>
+</div>
 
-{% include 'chart/top_skills.html' %}
 
-{% include 'chart/top_city.html' %}
 
-{% include 'chart/city_to_work_on_site.html' %}
+
+<div class="container">
+  <button class="minimize-button">Minimize</button>
+  <div class="content">
+    {% include 'chart/top_skills.html' %}
+  </div>
+</div>
+
+<div class="container">
+  <button class="minimize-button">Minimize</button>
+  <div class="content">
+    {% include 'chart/top_city.html' %}
+  </div>
+</div>
+
+<div class="container">
+  <button class="minimize-button">Minimize</button>
+  <div class="content">
+    {% include 'chart/city_to_work_on_site.html' %}
+  </div>
+</div>
+
 
 {% endblock %}

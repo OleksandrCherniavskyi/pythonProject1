@@ -1,57 +1,38 @@
 
 
 {% block content %}
-<table border='1'>
-  <tr>
-    <th>Skill</th>
-    <th>Skill Count</th>
-    <th>Average Level</th>
-  </tr>
-  {% for skill in top_skills %}
-    <tr>
-      <td>{{ skill.name }}</td>
-      <td>{{ skill.skill_count }}</td>
-      <td>{{ skill.avg_level }}</td>
-    </tr>
-  {% endfor %}
-</table>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<canvas id="chart2" style="width: 100%; max-width: 450px; min-height: 200px; max-height: 300px;"></canvas>
 
 
-<div class="chart-container">
-  <canvas id="chart2"></canvas>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Include Chart.js library -->
 
 <script>
-  const data = {
-    datasets: [{
-      label: 'Top Skills',
-      data: [
-        {% for skill in top_skills %}
-          { x: {{ skill.skill_count }}, y: {{ skill.avg_level }}, r: 15 },
-        {% endfor %}
-      ],
-      backgroundColor: 'rgb(255, 99, 132)'
-    }]
-  },
-
-
-  const config = {
+  const ctx = document.getElementById('chart2').getContext('2d');
+  new Chart(ctx, {
     type: 'bubble',
-    data: data,
+    data: {
+      datasets: [{
+        label: 'Top Skills',
+        data: [
+          {% for skill in top_skills %}
+            { x: {{ skill.skill_count }}, y: {{ skill.avg_level }}, r: 15 },
+          {% endfor %}
+        ],
+        backgroundColor: 'rgb(255, 99, 132)'
+      }]
+    },
     options: {
       scales: {
         y: {
-          beginAtZero: True
+          beginAtZero: true
         }
       }
     }
-  };
-
-  const ctx = document.getElementById('chart2').getContext('2d');
-  new Chart(ctx, config);
+  });
 </script>
+
 
 
 {% endblock content %}
