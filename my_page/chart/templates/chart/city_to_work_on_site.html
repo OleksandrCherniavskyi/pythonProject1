@@ -1,14 +1,30 @@
 {% block content %}
-    <table border='1'>
-      <tr>
-        <th>City</th>
-        <th>City Count</th>
-      </tr>
-      {% for city in city_to_work_on_site %}
-        <tr>
-          <td>{{ city.city }}</td>
-          <td>{{ city.city_count }}</td>
-        </tr>
-      {% endfor %}
-    </table>
+
+<div><canvas id="chart4" ></canvas></div>
+
+<script>
+  const ctx4 = document.getElementById('chart4');
+
+  new Chart(ctx4, {
+    type: 'bar',
+    data: {
+      labels: [{% for city in city_to_work_on_site %} "{{ city.city }}", {% endfor %}],
+      datasets: [{
+        label: '',
+        data: [{% for city in city_to_work_on_site %} {{ city.city_count }}, {% endfor %}],
+        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+        borderWidth: 2,
+            barThickness: 20
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+
+</script>
 {% endblock content %}

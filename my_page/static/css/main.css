@@ -1,6 +1,9 @@
 .container {
   border: 1px solid #ccc;
+  margin: 0 auto;
   margin-bottom: 10px;
+  max-width: 50%;
+  min-width: 500px;
 }
 
 .header {
@@ -18,4 +21,3 @@
   float: right;
   font-weight: bold;
 }
-

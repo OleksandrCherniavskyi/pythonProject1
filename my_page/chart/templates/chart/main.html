@@ -4,14 +4,11 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'css/main.css' %}">
 <script src="{% static 'js/main.js' %}"></script>
-
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-
 
 <div class="container">
   <div class="header" onclick="toggleContent(this)">
-    Container 1
+    Top 7 position for last month
     <span class="expand-icon">+</span>
   </div>
   <div class="content">
@@ -19,29 +16,62 @@
   </div>
 </div>
 
-
-
-
 <div class="container">
-  <button class="minimize-button">Minimize</button>
+  <div class="header" onclick="toggleContent(this)">
+    Popular skills and rate
+    <span class="expand-icon">+</span>
+  </div>
   <div class="content">
     {% include 'chart/top_skills.html' %}
   </div>
 </div>
 
 <div class="container">
-  <button class="minimize-button">Minimize</button>
+  <div class="header" onclick="toggleContent(this)">
+    Positions from most popular locations
+    <span class="expand-icon">+</span>
+  </div>
   <div class="content">
     {% include 'chart/top_city.html' %}
   </div>
 </div>
 
 <div class="container">
-  <button class="minimize-button">Minimize</button>
+  <div class="header" onclick="toggleContent(this)">
+    Positions from most popular locations work on site
+    <span class="expand-icon">+</span>
+  </div>
   <div class="content">
     {% include 'chart/city_to_work_on_site.html' %}
   </div>
 </div>
 
+<script>
+    function toggleContent(header) {
+      const container = header.parentNode;
+      const content = container.querySelector('.content');
+      const expandIcon = container.querySelector('.expand-icon')
+      // Check if the content is currently visible
+      const isContentVisible = content.style.display !== 'none'
+      // Hide all other content elements except the clicked one
+      const allContainers = document.querySelectorAll('.container');
+      allContainers.forEach((container) => {
+        const content = container.querySelector('.content');
+        const expandIcon = container.querySelector('.expand-icon')
+        if (container !== header.parentNode) {
+          content.style.display = 'none';
+          expandIcon.innerText = '+';
+        }
+      })
+      // Toggle the visibility of the clicked container
+      if (!isContentVisible) {
+        content.style.display = 'block';
+        expandIcon.innerText = '-';
+      } else {
+        content.style.display = 'none';
+        expandIcon.innerText = '+';
+      }
+    }
+</script>
 
 {% endblock %}

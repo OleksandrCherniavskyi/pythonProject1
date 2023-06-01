@@ -1,14 +1,6 @@
-
-
 {% block content %}
 
-
-
-<canvas id="chart1" style="width: 100%; max-width: 450px; min-height: 200px; max-height: 300px;"></canvas>
-
-
-
-
+<div><canvas id="chart1" ></canvas></div>
 
 <script>
   const ctx = document.getElementById('chart1');
@@ -18,11 +10,11 @@
     data: {
       labels: [{% for offer in top_offers %} "{{ offer.title }}", {% endfor %}],
       datasets: [{
-        label: 'Top position on last week',
+        label: '',
         data: [{% for offer in top_offers %} {{ offer.title_count }}, {% endfor %}],
         backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
         borderWidth: 2,
-        barThickness: 20
+            barThickness: 20
       }]
     },
     options: {
@@ -33,7 +25,6 @@
       }
     }
   });
-
 
 </script>
 

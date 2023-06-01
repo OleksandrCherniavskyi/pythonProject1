@@ -2,22 +2,21 @@
 
 {% block content %}
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<canvas id="chart2" style="width: 100%; max-width: 450px; min-height: 200px; max-height: 300px;"></canvas>
 
+<canvas id="chart2"></canvas>
 
 
 <script>
-  const ctx = document.getElementById('chart2').getContext('2d');
-  new Chart(ctx, {
+  const ctx2 = document.getElementById('chart2').getContext('2d');
+  new Chart(ctx2, {
     type: 'bubble',
     data: {
       datasets: [{
         label: 'Top Skills',
         data: [
           {% for skill in top_skills %}
-            { x: {{ skill.skill_count }}, y: {{ skill.avg_level }}, r: 15 },
+            { x: {{ skill.skill_count }}, y: {{ skill.avg_level }}, r: 15, description: "{{ skill.name }}" },
           {% endfor %}
         ],
         backgroundColor: 'rgb(255, 99, 132)'
@@ -27,6 +26,16 @@
       scales: {
         y: {
           beginAtZero: true
+        }
+      },
+      plugins: {
+        tooltip: {
+          callbacks: {
+            label: function(context) {
+              var dataPoint = context.dataset.data[context.dataIndex];
+              return dataPoint.description;
+            }
+          }
         }
       }
     }
