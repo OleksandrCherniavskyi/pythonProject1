@@ -1,0 +1,30 @@
+{% block content %}
+
+<div><canvas id="chart7" ></canvas></div>
+
+<script>
+
+  const ctx7 = document.getElementById('chart7');
+  new Chart(ctx7, {
+    type: 'bar',
+    data: {
+    labels: [{% for specialization in specializations %} "{{ specialization.marker_icon }}", {% endfor %}],
+    datasets: [{
+      label: '',
+      data: [{% for specialization in specializations %} "{{ specialization.marker_count }}", {% endfor %}],
+      backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+      borderColor: 'rgb(75, 192, 192)',
+
+    }]
+  },
+
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+  {% endblock content %}
+</script>

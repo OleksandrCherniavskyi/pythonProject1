@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>Most Popular Skill</h1>
+    {% if most_popular_skill %}
+        <ul>
+            {% for skill in most_popular_skill %}
+                <li>{{ skill.name }} (Count: {{ skill.skill_count }})</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No popular skill found.</p>
+    {% endif %}
+<div><canvas id="chart7" ></canvas></div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+
+  const ctx7 = document.getElementById('chart7');
+  new Chart(ctx7, {
+    type: 'bar',
+    data: {
+    labels: [{% for skill in most_popular_skill %} "{{ skill.name }}", {% endfor %}],
+    datasets: [{
+      label: '',
+      data: [{% for skill in most_popular_skill %} "{{ skill.skill_count }}", {% endfor %}],
+      backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+      borderColor: 'rgb(75, 192, 192)',
+
+    }]
+  },
+
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+
+</script>
+  {% endblock content %}
+

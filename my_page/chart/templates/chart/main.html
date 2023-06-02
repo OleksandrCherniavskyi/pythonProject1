@@ -46,6 +46,45 @@
   </div>
 </div>
 
+<div class="container">
+  <div class="header" onclick="toggleContent(this)">
+    Positions on day
+    <span class="expand-icon">+</span>
+  </div>
+  <div class="content">
+    {% include 'chart/positions_on_day.html' %}
+  </div>
+</div>
+
+<div class="container">
+  <div class="header" onclick="toggleContent(this)">
+    Positions for experience level
+    <span class="expand-icon">+</span>
+  </div>
+  <div class="content">
+    {% include 'chart/positions_for_experience.html' %}
+  </div>
+</div>
+
+<div class="container">
+  <div class="header" onclick="toggleContent(this)">
+    Top specializations
+    <span class="expand-icon">+</span>
+  </div>
+  <div class="content">
+    {% include 'chart/specializations.html' %}
+  </div>
+</div>
+<div class="container">
+  <div class="header" onclick="toggleContent(this)">
+    Top skill data
+    <span class="expand-icon">+</span>
+  </div>
+  <div class="content">
+
+  </div>
+</div>
+
 <script>
     function toggleContent(header) {
       const container = header.parentNode;

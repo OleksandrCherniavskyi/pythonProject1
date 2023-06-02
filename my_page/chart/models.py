@@ -117,31 +117,17 @@ class DjangoSession(models.Model):
         managed = False
         db_table = 'django_session'
 
-class EmploymentTypes(models.Model):
-    employment_type_id = models.CharField(primary_key=True, max_length=300)
-    type = models.CharField(max_length=100)
-    from_salary = models.IntegerField()
-    to_salary = models.IntegerField()
-    currency = models.CharField(max_length=10)
+class Brands(models.Model):
+    company_name = models.CharField(max_length=250)
+    company_size = models.IntegerField()
+    company_url = models.CharField(max_length=500)
 
     class Meta:
-        managed = False
-        db_table = 'employment_types'
-
-class Skills(models.Model):
-    objects = models.Manager()
-    skill_id = models.CharField(primary_key=True, max_length=300)
-    name = models.CharField(max_length=50)
-    level = models.IntegerField()
-
-    class Meta:
-        managed = False
-        db_table = 'skills'
-
+        db_table = 'brands'
 
 class Offers(models.Model):
     objects = models.Manager()
-    id = models.CharField(primary_key=True, max_length=300)
+    offer_id = models.CharField(primary_key=True, max_length=300)
     published_at = models.DateField()
     title = models.CharField(max_length=100)
     marker_icon = models.CharField(max_length=100)
@@ -150,24 +136,40 @@ class Offers(models.Model):
     country_code = models.CharField(max_length=10)
     remote = models.CharField(max_length=50)
     workplace_type = models.CharField(max_length=50)
-    company_name = models.CharField(max_length=250)
-    employment_types = models.ManyToManyField(EmploymentTypes, related_name='offers')
-    skills = models.ManyToManyField(Skills, related_name='offers')
-    brands_offices = models.ManyToManyField('BrandsOffice', related_name='offers')
+    company_name = models.ForeignKey(Brands, on_delete=models.CASCADE)
 
 
     class Meta:
-        managed = False
         db_table = 'offers'
 
+class Skills(models.Model):
+    objects = models.Manager()
+    offer = models.ForeignKey(Offers, on_delete=models.CASCADE)
+    name = models.CharField(max_length=50)
+    level = models.IntegerField()
+
+
+    class Meta:
+        db_table = 'skills'
+
+class EmploymentTypes(models.Model):
+    employment_type_id = models.ForeignKey(Offers, on_delete=models.CASCADE)
+    type = models.CharField(max_length=100)
+    from_salary = models.IntegerField()
+    to_salary = models.IntegerField()
+    currency = models.CharField(max_length=10)
+
+    class Meta:
+        db_table = 'employment_types'
 
 
 class BrandsOffice(models.Model):
-    slug = models.CharField(primary_key=True, max_length=300)
-    company_name = models.CharField(max_length=250)
+    slug = models.CharField( max_length=300)
+    company_name = models.ForeignKey(Brands, on_delete=models.CASCADE)
     office = models.CharField(max_length=100)
-    id = models.CharField(max_length=300)
+
 
     class Meta:
-        managed = False
         db_table = 'brands_office'
+
+

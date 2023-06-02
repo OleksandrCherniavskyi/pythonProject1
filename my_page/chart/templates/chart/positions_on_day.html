@@ -1,0 +1,30 @@
+{% block content %}
+
+<div><canvas id="chart5" ></canvas></div>
+
+<script>
+
+  const ctx5 = document.getElementById('chart5');
+  new Chart(ctx5, {
+    type: 'bar',
+    data: {
+    labels: [{% for position in positions_on_day %} "{{ position.published_at }}", {% endfor %}],
+    datasets: [{
+      label: '',
+      data: [{% for position in positions_on_day %} "{{ position.title_count }}", {% endfor %}],
+      backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+      borderColor: 'rgb(75, 192, 192)',
+
+    }]
+  },
+
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+  {% endblock content %}
+</script>
