@@ -6,7 +6,7 @@
 
   const ctx5 = document.getElementById('chart5');
   new Chart(ctx5, {
-    type: 'bar',
+    type: 'line',
     data: {
     labels: [{% for position in positions_on_day %} "{{ position.published_at }}", {% endfor %}],
     datasets: [{

@@ -18,6 +18,16 @@
 
 <div class="container">
   <div class="header" onclick="toggleContent(this)">
+    Skills for {{ top_offer }}
+    <span class="expand-icon">+</span>
+  </div>
+  <div class="content">
+    {% include 'chart/find_most_popular_skill.html' %}
+  </div>
+</div>
+
+<div class="container">
+  <div class="header" onclick="toggleContent(this)">
     Popular skills and rate
     <span class="expand-icon">+</span>
   </div>

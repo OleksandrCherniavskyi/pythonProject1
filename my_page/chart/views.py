@@ -8,7 +8,7 @@ import datetime
 
 
 seven_days_ago = now() - datetime.timedelta(days=7)
-month_ago = now() - datetime.timedelta(days=7)
+month_ago = now() - datetime.timedelta(days=30)
 
 def main(request):
 
@@ -35,7 +35,7 @@ def main(request):
     positions_on_day = Offers.objects.exclude(published_at="2023-05-23") \
                            .values('published_at') \
                            .annotate(title_count=Count('title')) \
-                           .order_by('published_at')[:10]
+                           .order_by('published_at')
 
     positions_for_experience = Offers.objects.filter(published_at__gte=month_ago)\
         .values('experience_level')\
@@ -48,6 +48,20 @@ def main(request):
         .order_by('-marker_count')[:7]
 
 
+    top_offer = Offers.objects.filter(published_at__gte=month_ago) \
+                    .values('title') \
+                    .annotate(title_count=Count('title')) \
+                    .order_by('-title_count')[0:1]
+    id_top_offer = Offers.objects.filter(title=top_offer[0]['title']) \
+        .values('id')
+    most_popular_skill = Skills.objects.filter(id__in=id_top_offer) \
+                             .values('name') \
+                             .annotate(skill_count=Count('name'), avg_level=Avg('level')) \
+                             .order_by('-skill_count')[:10]
+    top_offer = top_offer[0]['title']
+
+
+
 
     context = {
         'top_offers': top_offers,
@@ -57,74 +71,31 @@ def main(request):
         'positions_on_day': positions_on_day,
         'positions_for_experience': positions_for_experience,
         'specializations': specializations,
+        'top_offer': top_offer,
+        'most_popular_skill': most_popular_skill,
     }
     return render(request, 'chart/main.html', context)
 
 
 
-def find_most_popular_skill(request):
-    # Find the most popular 'title' in Offers
-    top_offers = Offers.objects.filter(published_at__gte=month_ago) \
-        .values('title') \
-        .annotate(title_count=Count('title')) \
-        .order_by('-title_count')\
-        .first()
-    if top_offers:
-        most_popular_skill = Skills.objects.filter(offers__title=top_offers)\
-            .values('name') \
-                                 .annotate(skill_count=Count('name'), avg_level=Avg('level'))\
-                                 .order_by('-skill_count')[:7]
-
-
-        context = {
-            'most_popular_skill': most_popular_skill,
-        }
-
-
-        return render(request, 'chart/find_most_popular_skill.html', context)
-#def top_offers(request):
+#def find_most_popular_skill(request):
 #
-#    top_offers = Offers.objects.filter(published_at__gte=seven_days_ago) \
-#                              .values('title') \
-#                              .annotate(title_count=Count('title')) \
-#                              .order_by('-title_count')[:7]
-#    context = {
-#        'top_offers': top_offers,
-#    }
-#    return render(request, 'chart/top_offers.html', context)
+#    top_offer = Offers.objects.filter(published_at__gte=month_ago) \
+#        .values('title') \
+#        .annotate(title_count=Count('title')) \
+#        .order_by('-title_count')[1:2]
 #
+#    id_top_offer = Offers.objects.filter(title=top_offer[0]['title'])\
+#        .values('id')
 #
-#
-#
-#def top_skills(request):
-#    top_skills = Skills.objects.values('name') \
+#    most_popular_skill = Skills.objects.filter(id__in=id_top_offer) \
+#        .values('name') \
 #        .annotate(skill_count=Count('name'), avg_level=Avg('level')) \
 #        .order_by('-skill_count')[:10]
+#    top_offer = top_offer[0]['title']
 #
-#    template = loader.get_template('chart/top_skills.html')
-#    context = {'top_skills': top_skills}
-#    return HttpResponse(template.render(context, request))
-#
-#
-#def top_city(request):
-#
-#    top_city = Offers.objects.filter(published_at__gte=seven_days_ago) \
-#                              .values('city') \
-#                              .annotate(city_count=Count('city')) \
-#                              .order_by('-city_count')[:7]
 #    context = {
-#        'top_city': top_city,
+#        'top_offer': top_offer,
+#        'most_popular_skill': most_popular_skill,
 #    }
-#    return render(request, 'chart/top_city.html', context)
-#
-#def city_to_work_on_site(request):
-#
-#    city_to_work_on_site = Offers.objects.filter(published_at__gte=seven_days_ago,
-#                                       workplace_type__in=['partly_remote', 'office']) \
-#                              .values('city') \
-#                              .annotate(city_count=Count('city')) \
-#                              .order_by('-city_count')[:7]
-#    context = {
-#        'city_to_work_on_site': city_to_work_on_site,
-#    }
-#    return render(request, 'chart/city_to_work_on_site.html', context)
+#    return render(request, 'chart/main.html', context)
