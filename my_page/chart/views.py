@@ -48,18 +48,96 @@ def main(request):
         .order_by('-marker_count')[:7]
 
 
-    top_offer = Offers.objects.filter(published_at__gte=month_ago) \
+    # Position #1
+    top_offer1 = Offers.objects.filter(published_at__gte=month_ago) \
                     .values('title') \
                     .annotate(title_count=Count('title')) \
                     .order_by('-title_count')[0:1]
-    id_top_offer = Offers.objects.filter(title=top_offer[0]['title']) \
+    id_top_offer1 = Offers.objects.filter(title=top_offer1[0]['title']) \
         .values('id')
-    most_popular_skill = Skills.objects.filter(id__in=id_top_offer) \
+    most_popular_skill1 = Skills.objects.filter(id__in=id_top_offer1) \
                              .values('name') \
                              .annotate(skill_count=Count('name'), avg_level=Avg('level')) \
                              .order_by('-skill_count')[:10]
-    top_offer = top_offer[0]['title']
+    top_offer1 = top_offer1[0]['title']
 
+    # Position #2
+    top_offer2 = Offers.objects.filter(published_at__gte=month_ago) \
+                    .values('title') \
+                    .annotate(title_count=Count('title')) \
+                    .order_by('-title_count')[1:2]
+    id_top_offer2 = Offers.objects.filter(title=top_offer2[0]['title']) \
+        .values('id')
+    most_popular_skill2 = Skills.objects.filter(id__in=id_top_offer2) \
+                             .values('name') \
+                             .annotate(skill_count=Count('name'), avg_level=Avg('level')) \
+                             .order_by('-skill_count')[:10]
+    top_offer2 = top_offer2[0]['title']
+
+    # Position #3
+    top_offer3 = Offers.objects.filter(published_at__gte=month_ago) \
+                     .values('title') \
+                     .annotate(title_count=Count('title')) \
+                     .order_by('-title_count')[2:3]
+    id_top_offer3 = Offers.objects.filter(title=top_offer3[0]['title']) \
+        .values('id')
+    most_popular_skill3 = Skills.objects.filter(id__in=id_top_offer3) \
+                              .values('name') \
+                              .annotate(skill_count=Count('name'), avg_level=Avg('level')) \
+                              .order_by('-skill_count')[:10]
+    top_offer3 = top_offer3[0]['title']
+
+    # Position #4
+    top_offer4 = Offers.objects.filter(published_at__gte=month_ago) \
+                     .values('title') \
+                     .annotate(title_count=Count('title')) \
+                     .order_by('-title_count')[3:4]
+    id_top_offer4 = Offers.objects.filter(title=top_offer4[0]['title']) \
+        .values('id')
+    most_popular_skill4 = Skills.objects.filter(id__in=id_top_offer4) \
+                              .values('name') \
+                              .annotate(skill_count=Count('name'), avg_level=Avg('level')) \
+                              .order_by('-skill_count')[:10]
+    top_offer4 = top_offer4[0]['title']
+
+    # Position #5
+    top_offer5 = Offers.objects.filter(published_at__gte=month_ago) \
+                     .values('title') \
+                     .annotate(title_count=Count('title')) \
+                     .order_by('-title_count')[4:5]
+    id_top_offer5 = Offers.objects.filter(title=top_offer5[0]['title']) \
+        .values('id')
+    most_popular_skill5 = Skills.objects.filter(id__in=id_top_offer5) \
+                              .values('name') \
+                              .annotate(skill_count=Count('name'), avg_level=Avg('level')) \
+                              .order_by('-skill_count')[:10]
+    top_offer5 = top_offer5[0]['title']
+
+    # Position #6
+    top_offer6 = Offers.objects.filter(published_at__gte=month_ago) \
+                     .values('title') \
+                     .annotate(title_count=Count('title')) \
+                     .order_by('-title_count')[5:6]
+    id_top_offer6 = Offers.objects.filter(title=top_offer6[0]['title']) \
+        .values('id')
+    most_popular_skill6 = Skills.objects.filter(id__in=id_top_offer6) \
+                              .values('name') \
+                              .annotate(skill_count=Count('name'), avg_level=Avg('level')) \
+                              .order_by('-skill_count')[:10]
+    top_offer6 = top_offer6[0]['title']
+
+    # Position #7
+    top_offer7 = Offers.objects.filter(published_at__gte=month_ago) \
+                     .values('title') \
+                     .annotate(title_count=Count('title')) \
+                     .order_by('-title_count')[6:7]
+    id_top_offer7 = Offers.objects.filter(title=top_offer7[0]['title']) \
+        .values('id')
+    most_popular_skill7 = Skills.objects.filter(id__in=id_top_offer7) \
+                              .values('name') \
+                              .annotate(skill_count=Count('name'), avg_level=Avg('level')) \
+                              .order_by('-skill_count')[:10]
+    top_offer7 = top_offer7[0]['title']
 
 
 
@@ -71,31 +149,22 @@ def main(request):
         'positions_on_day': positions_on_day,
         'positions_for_experience': positions_for_experience,
         'specializations': specializations,
-        'top_offer': top_offer,
-        'most_popular_skill': most_popular_skill,
+        'top_offer1': top_offer1,
+        'most_popular_skill1': most_popular_skill1,
+        'top_offer2': top_offer2,
+        'most_popular_skill2': most_popular_skill2,
+        'top_offer3': top_offer3,
+        'most_popular_skill3': most_popular_skill3,
+        'top_offer4': top_offer4,
+        'most_popular_skill4': most_popular_skill4,
+        'top_offer5': top_offer5,
+        'most_popular_skill5': most_popular_skill5,
+        'top_offer6': top_offer6,
+        'most_popular_skill6': most_popular_skill6,
+        'top_offer7': top_offer7,
+        'most_popular_skill7': most_popular_skill7,
     }
     return render(request, 'chart/main.html', context)
 
 
 
-#def find_most_popular_skill(request):
-#
-#    top_offer = Offers.objects.filter(published_at__gte=month_ago) \
-#        .values('title') \
-#        .annotate(title_count=Count('title')) \
-#        .order_by('-title_count')[1:2]
-#
-#    id_top_offer = Offers.objects.filter(title=top_offer[0]['title'])\
-#        .values('id')
-#
-#    most_popular_skill = Skills.objects.filter(id__in=id_top_offer) \
-#        .values('name') \
-#        .annotate(skill_count=Count('name'), avg_level=Avg('level')) \
-#        .order_by('-skill_count')[:10]
-#    top_offer = top_offer[0]['title']
-#
-#    context = {
-#        'top_offer': top_offer,
-#        'most_popular_skill': most_popular_skill,
-#    }
-#    return render(request, 'chart/main.html', context)

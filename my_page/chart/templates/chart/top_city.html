@@ -13,10 +13,10 @@
         label: '',
         data: [{% for city in top_city %} {{ city.city_count }}, {% endfor %}],
         backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
-        borderWidth: 2,
-            barThickness: 20
-      }]
-    },
+        borderColor: 'rgb(75, 192, 192)',
+
+    }]
+  },
     options: {
       scales: {
         y: {
