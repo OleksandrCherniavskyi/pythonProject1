@@ -42,52 +42,170 @@
         {% include 'chart/find_most_popular_skill3.html' %}
       </div>
     </div>
+    <div class="container">
+      <div class="header" onclick="toggleContent(this)">
+        Skills for {{ top_offer4 }}
+        <span class="expand-icon">+</span>
+      </div>
+      <div class="content">
+        {% include 'chart/find_most_popular_skill4.html' %}
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="header" onclick="toggleContent(this)">
+        Skills for {{ top_offer5 }}
+        <span class="expand-icon">+</span>
+      </div>
+      <div class="content">
+        {% include 'chart/find_most_popular_skill5.html' %}
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="header" onclick="toggleContent(this)">
+        Skills for {{ top_offer6 }}
+        <span class="expand-icon">+</span>
+      </div>
+      <div class="content">
+        {% include 'chart/find_most_popular_skill6.html' %}
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="header" onclick="toggleContent(this)">
+        Skills for {{ top_offer7 }}
+        <span class="expand-icon">+</span>
+      </div>
+      <div class="content">
+        {% include 'chart/find_most_popular_skill7.html' %}
+      </div>
+    </div>
 
   </div>
 </div>
 
-
-
-
-<div class="container">
-  <div class="header" onclick="toggleContent(this)">
-    Skills for {{ top_offer4 }}
+<div class="megacontainer">
+  <div class="megaheader" onclick="toggleContent(this)">
+    Specialisation
     <span class="expand-icon">+</span>
   </div>
-  <div class="content">
-    {% include 'chart/find_most_popular_skill4.html' %}
+  <div Class="content">
+    <div class="container">
+      <div class="header" onclick="toggleContent(this)">
+        Top specializations
+        <span class="expand-icon">+</span>
+      </div>
+      <div class="content">
+        {% include 'chart/specializations.html' %}
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="header" onclick="toggleContent(this)">
+        Skills for {{ specialisation1 }}
+        <span class="expand-icon">+</span>
+      </div>
+      <div class="content">
+      {% include 'chart/specialisation/specialisation1.html' %}
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="header" onclick="toggleContent(this)">
+        Skills for {{ specialisation2 }}
+        <span class="expand-icon">+</span>
+      </div>
+      <div class="content">
+      {% include 'chart/specialisation/specialisation2.html' %}
+      </div>
+    </div>
+    <div class="container">
+      <div class="header" onclick="toggleContent(this)">
+        Skills for {{ specialisation3 }}
+        <span class="expand-icon">+</span>
+      </div>
+      <div class="content">
+      {% include 'chart/specialisation/specialisation3.html' %}
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="header" onclick="toggleContent(this)">
+        Skills for {{ specialisation4 }}
+        <span class="expand-icon">+</span>
+      </div>
+      <div class="content">
+      {% include 'chart/specialisation/specialisation4.html' %}
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="header" onclick="toggleContent(this)">
+        Skills for {{ specialisation5 }}
+        <span class="expand-icon">+</span>
+      </div>
+      <div class="content">
+      {% include 'chart/specialisation/specialisation5.html' %}
+      </div>
+    </div>
+
+
+    <div class="container">
+      <div class="header" onclick="toggleContent(this)">
+        Skills for {{ specialisation6 }}
+        <span class="expand-icon">+</span>
+      </div>
+      <div class="content">
+      {% include 'chart/specialisation/specialisation6.html' %}
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="header" onclick="toggleContent(this)">
+        Skills for {{ specialisation7 }}
+        <span class="expand-icon">+</span>
+      </div>
+      <div class="content">
+      {% include 'chart/specialisation/specialisation7.html' %}
+      </div>
+    </div>
+
   </div>
 </div>
 
-<div class="container">
-  <div class="header" onclick="toggleContent(this)">
-    Skills for {{ top_offer5 }}
+
+<div class="megacontainer">
+  <div class="megaheader" onclick="toggleContent(this)">
+    Location and remote
     <span class="expand-icon">+</span>
   </div>
-  <div class="content">
-    {% include 'chart/find_most_popular_skill5.html' %}
+  <div Class="content">
+    <div class="container">
+      <div class="header" onclick="toggleContent(this)">
+        Positions from most popular locations
+        <span class="expand-icon">+</span>
+      </div>
+      <div class="content">
+        {% include 'chart/top_city.html' %}
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="header" onclick="toggleContent(this)">
+        Positions from most popular locations work on site
+        <span class="expand-icon">+</span>
+      </div>
+      <div class="content">
+        {% include 'chart/city_to_work_on_site.html' %}
+      </div>
+    </div>
+
+
   </div>
+
 </div>
 
-<div class="container">
-  <div class="header" onclick="toggleContent(this)">
-    Skills for {{ top_offer6 }}
-    <span class="expand-icon">+</span>
-  </div>
-  <div class="content">
-    {% include 'chart/find_most_popular_skill6.html' %}
-  </div>
-</div>
-
-<div class="container">
-  <div class="header" onclick="toggleContent(this)">
-    Skills for {{ top_offer7 }}
-    <span class="expand-icon">+</span>
-  </div>
-  <div class="content">
-    {% include 'chart/find_most_popular_skill7.html' %}
-  </div>
-</div>
 
 <div class="container">
   <div class="header" onclick="toggleContent(this)">
@@ -99,25 +217,7 @@
   </div>
 </div>
 
-<div class="container">
-  <div class="header" onclick="toggleContent(this)">
-    Positions from most popular locations
-    <span class="expand-icon">+</span>
-  </div>
-  <div class="content">
-    {% include 'chart/top_city.html' %}
-  </div>
-</div>
 
-<div class="container">
-  <div class="header" onclick="toggleContent(this)">
-    Positions from most popular locations work on site
-    <span class="expand-icon">+</span>
-  </div>
-  <div class="content">
-    {% include 'chart/city_to_work_on_site.html' %}
-  </div>
-</div>
 
 <div class="container">
   <div class="header" onclick="toggleContent(this)">
@@ -139,24 +239,8 @@
   </div>
 </div>
 
-<div class="container">
-  <div class="header" onclick="toggleContent(this)">
-    Top specializations
-    <span class="expand-icon">+</span>
-  </div>
-  <div class="content">
-    {% include 'chart/specializations.html' %}
-  </div>
-</div>
-<div class="container">
-  <div class="header" onclick="toggleContent(this)">
-    Top skill data
-    <span class="expand-icon">+</span>
-  </div>
-  <div class="content">
 
-  </div>
-</div>
+
 
 <script>
     function toggleContent(header) {

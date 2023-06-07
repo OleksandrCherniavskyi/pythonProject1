@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Workplace Type</title>
+</head>
+<body>
+    <h1>Junior Work Types</h1>
+    <ul>
+        {% for work_type in work_type_jr %}
+            <li>{{ work_type.workplace_type }} - {{ work_type.count_workplace_type }} ({{ work_type.percentage|floatformat:2 }}%)</li>
+        {% endfor %}
+    </ul>
+
+    <h1>Mid-Level Work Types</h1>
+    <ul>
+        {% for work_type in work_type_mid %}
+            <li>{{ work_type.workplace_type }} - {{ work_type.count_workplace_type }} ({{ work_type.percentage|floatformat:2 }}%)</li>
+        {% endfor %}
+    </ul>
+
+    <h1>Senior Work Types</h1>
+    <ul>
+        {% for work_type in work_type_sr %}
+            <li>{{ work_type.workplace_type }} - {{ work_type.count_workplace_type }} ({{ work_type.percentage|floatformat:2 }}%)</li>
+        {% endfor %}
+    </ul>

@@ -1,0 +1,40 @@
+{% block content %}
+    <div id="tableContainer">
+        <div id="tableWrapper">
+            <table id="SpecTable3">
+                <thead>
+                    <tr>
+                        <th>Skill Name</th>
+                        <th>Skill Point</th>
+                        <th>Average Level</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for skill in specialisation_skill3|dictsortreversed:"skill_count" %}
+                        <tr>
+                            <td>{{ skill.name }}</td>
+                            <td>{{ skill.skill_count }}</td>
+                            <td>{{ skill.avg_level|floatformat:1 }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#SpecTable3').DataTable({
+                searching: false,
+                paging: false,
+                info: false,
+                order: [[1, 'desc']]
+            });
+        });
+    </script>
+{% endblock content %}

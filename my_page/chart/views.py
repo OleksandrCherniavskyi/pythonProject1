@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.template import loader
-from .models import Offers, Skills
+from .models import Offers, Skills, BrandsOffice
 from django.shortcuts import render
 from django.db.models import Count, Avg
 from django.utils.timezone import now
@@ -139,7 +139,96 @@ def main(request):
                               .order_by('-skill_count')[:10]
     top_offer7 = top_offer7[0]['title']
 
+    # Specialisation #1
+    specialisation1 = Offers.objects.filter(published_at__gte=month_ago) \
+                          .values('marker_icon') \
+                          .annotate(marker_icon_count=Count('marker_icon')) \
+                          .order_by('-marker_icon_count')[0:1]
+    id_specialisation1 = Offers.objects.filter(marker_icon=specialisation1[0]['marker_icon']) \
+        .values('id')
+    specialisation_skill1 = Skills.objects.filter(id__in=id_specialisation1) \
+                                .values('name') \
+                                .annotate(skill_count=Count('name'), avg_level=Avg('level')) \
+                                .order_by('-skill_count')[:10]
+    specialisation1 = specialisation1[0]['marker_icon']
 
+    # Specialisation #2
+    specialisation2 = Offers.objects.filter(published_at__gte=month_ago) \
+                          .values('marker_icon') \
+                          .annotate(marker_icon_count=Count('marker_icon')) \
+                          .order_by('-marker_icon_count')[1:2]
+    id_specialisation2 = Offers.objects.filter(marker_icon=specialisation2[0]['marker_icon']) \
+        .values('id')
+    specialisation_skill2 = Skills.objects.filter(id__in=id_specialisation2) \
+                                .values('name') \
+                                .annotate(skill_count=Count('name'), avg_level=Avg('level')) \
+                                .order_by('-skill_count')[:10]
+    specialisation2 = specialisation2[0]['marker_icon']
+
+    # Specialisation #3
+    specialisation3 = Offers.objects.filter(published_at__gte=month_ago) \
+                          .values('marker_icon') \
+                          .annotate(marker_icon_count=Count('marker_icon')) \
+                          .order_by('-marker_icon_count')[2:3]
+    id_specialisation3 = Offers.objects.filter(marker_icon=specialisation3[0]['marker_icon']) \
+        .values('id')
+    specialisation_skill3 = Skills.objects.filter(id__in=id_specialisation3) \
+                                .values('name') \
+                                .annotate(skill_count=Count('name'), avg_level=Avg('level')) \
+                                .order_by('-skill_count')[:10]
+    specialisation3 = specialisation3[0]['marker_icon']
+
+    # Specialisation #4
+    specialisation4 = Offers.objects.filter(published_at__gte=month_ago) \
+                          .values('marker_icon') \
+                          .annotate(marker_icon_count=Count('marker_icon')) \
+                          .order_by('-marker_icon_count')[3:4]
+    id_specialisation4 = Offers.objects.filter(marker_icon=specialisation4[0]['marker_icon']) \
+        .values('id')
+    specialisation_skill4 = Skills.objects.filter(id__in=id_specialisation4) \
+                                .values('name') \
+                                .annotate(skill_count=Count('name'), avg_level=Avg('level')) \
+                                .order_by('-skill_count')[:10]
+    specialisation4 = specialisation4[0]['marker_icon']
+
+    # Specialisation #5
+    specialisation5 = Offers.objects.filter(published_at__gte=month_ago) \
+                          .values('marker_icon') \
+                          .annotate(marker_icon_count=Count('marker_icon')) \
+                          .order_by('-marker_icon_count')[4:5]
+    id_specialisation5 = Offers.objects.filter(marker_icon=specialisation5[0]['marker_icon']) \
+        .values('id')
+    specialisation_skill5 = Skills.objects.filter(id__in=id_specialisation5) \
+                                .values('name') \
+                                .annotate(skill_count=Count('name'), avg_level=Avg('level')) \
+                                .order_by('-skill_count')[:10]
+    specialisation5 = specialisation5[0]['marker_icon']
+
+    # Specialisation #6
+    specialisation6 = Offers.objects.filter(published_at__gte=month_ago) \
+                          .values('marker_icon') \
+                          .annotate(marker_icon_count=Count('marker_icon')) \
+                          .order_by('-marker_icon_count')[5:6]
+    id_specialisation6 = Offers.objects.filter(marker_icon=specialisation6[0]['marker_icon']) \
+        .values('id')
+    specialisation_skill6 = Skills.objects.filter(id__in=id_specialisation6) \
+                                .values('name') \
+                                .annotate(skill_count=Count('name'), avg_level=Avg('level')) \
+                                .order_by('-skill_count')[:10]
+    specialisation6 = specialisation6[0]['marker_icon']
+
+    # Specialisation #7
+    specialisation7 = Offers.objects.filter(published_at__gte=month_ago) \
+                          .values('marker_icon') \
+                          .annotate(marker_icon_count=Count('marker_icon')) \
+                          .order_by('-marker_icon_count')[6:7]
+    id_specialisation7 = Offers.objects.filter(marker_icon=specialisation7[0]['marker_icon']) \
+        .values('id')
+    specialisation_skill7 = Skills.objects.filter(id__in=id_specialisation7) \
+                                .values('name') \
+                                .annotate(skill_count=Count('name'), avg_level=Avg('level')) \
+                                .order_by('-skill_count')[:10]
+    specialisation7 = specialisation7[0]['marker_icon']
 
     context = {
         'top_offers': top_offers,
@@ -163,8 +252,59 @@ def main(request):
         'most_popular_skill6': most_popular_skill6,
         'top_offer7': top_offer7,
         'most_popular_skill7': most_popular_skill7,
+        'specialisation_skill1': specialisation_skill1,
+        'specialisation1': specialisation1,
+        'specialisation_skill2': specialisation_skill2,
+        'specialisation2': specialisation2,
+        'specialisation_skill3': specialisation_skill3,
+        'specialisation3': specialisation3,
+        'specialisation_skill4': specialisation_skill4,
+        'specialisation4': specialisation4,
+        'specialisation_skill5': specialisation_skill5,
+        'specialisation5': specialisation5,
+        'specialisation_skill6': specialisation_skill6,
+        'specialisation6': specialisation6,
+        'specialisation_skill7': specialisation_skill7,
+        'specialisation7': specialisation7,
     }
     return render(request, 'chart/main.html', context)
 
 
+def work_type(request):
+    work_type_jr = Offers.objects.filter(published_at__gte=month_ago, experience_level__in=['junior'])\
+        .values('workplace_type')\
+        .annotate(count_workplace_type=Count('workplace_type'))\
+        .order_by('workplace_type')
 
+    work_type_mid = Offers.objects.filter(published_at__gte=month_ago, experience_level__in=['mid']) \
+        .values('workplace_type') \
+        .annotate(count_workplace_type=Count('workplace_type')) \
+        .order_by('workplace_type')
+
+    work_type_sr = Offers.objects.filter(published_at__gte=month_ago, experience_level__in=['senior']) \
+        .values('workplace_type') \
+        .annotate(count_workplace_type=Count('workplace_type')) \
+        .order_by('workplace_type')
+
+    total_count_jr = Offers.objects.filter(published_at__gte=month_ago, experience_level__in=['junior']).count()
+    total_count_mid = Offers.objects.filter(published_at__gte=month_ago, experience_level__in=['mid']).count()
+    total_count_sr = Offers.objects.filter(published_at__gte=month_ago, experience_level__in=['senior']).count()
+    # Calculate percentages
+    for work_type in work_type_jr:
+        work_type['percentage'] = work_type['count_workplace_type'] * 100.0 / total_count_jr
+
+    for work_type in work_type_mid:
+        work_type['percentage'] = work_type['count_workplace_type'] * 100.0 / total_count_mid
+
+    for work_type in work_type_sr:
+        work_type['percentage'] = work_type['count_workplace_type'] * 100.0 / total_count_sr
+
+    context = {
+        'work_type_jr': work_type_jr,
+        'work_type_mid': work_type_mid,
+        'work_type_sr': work_type_sr,
+        'total_count_jr': total_count_jr,
+        'total_count_mid': total_count_mid,
+        'total_count_sr': total_count_sr,
+    }
+    return render(request, 'chart/work_type.html', context)

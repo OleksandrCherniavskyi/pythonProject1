@@ -174,6 +174,7 @@ class EmploymentTypes(models.Model):
 
 
 class BrandsOffice(models.Model):
+    objects = models.Manager()
     slug = models.CharField(primary_key=True, max_length=300)
     company_name = models.CharField(max_length=250)
     office = models.CharField(max_length=100)
