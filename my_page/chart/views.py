@@ -271,6 +271,20 @@ def main(request):
 
 
 def work_type(request):
+    experience_level = Offers.objects.values('experience_level').annotate(count=Count('experience_level'))
+    work_type_office = Offers.objects.filter(published_at__gte=month_ago, workplace_type='office') \
+        .values('experience_level') \
+        .annotate(count_workplace_type=Count('workplace_type'))
+
+    work_type_hybrid = Offers.objects.filter(published_at__gte=month_ago, workplace_type='partly_remote') \
+        .values('experience_level') \
+        .annotate(count_workplace_type=Count('workplace_type'))
+
+    work_type_remote = Offers.objects.filter(published_at__gte=month_ago, workplace_type='remote') \
+        .values('experience_level') \
+        .annotate(count_workplace_type=Count('workplace_type'))
+
+
     work_type_jr = Offers.objects.filter(published_at__gte=month_ago, experience_level__in=['junior'])\
         .values('workplace_type')\
         .annotate(count_workplace_type=Count('workplace_type'))\
@@ -306,5 +320,9 @@ def work_type(request):
         'total_count_jr': total_count_jr,
         'total_count_mid': total_count_mid,
         'total_count_sr': total_count_sr,
+        'experience_level': experience_level,
+        'work_type_office': work_type_office,
+        'work_type_hybrid': work_type_hybrid,
+        'work_type_remote': work_type_remote,
     }
     return render(request, 'chart/work_type.html', context)

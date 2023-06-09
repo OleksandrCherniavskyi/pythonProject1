@@ -26,7 +26,7 @@ def run_justjoin_etl():
     response = requests.get('https://justjoin.it/api/offers')
     data = response.json()
     data_in = []
-    yesterday = datetime.date.today() - datetime.timedelta(days=1)
+    yesterday = datetime.date.today() - datetime.timedelta(days=2)
     yesterday_formatted = yesterday.strftime('%Y-%m-%d')
 
     for offer in data:
@@ -222,8 +222,8 @@ def run_justjoin_etl():
         return brands_office_df
 
     # Validate
-    if check_if_valid_data(offers()):
-        print("Data valid, proceed to Load stage")
+    #if check_if_valid_data(offers()):
+    #    print("Data valid, proceed to Load stage Offers")
     # Load
     engine = create_engine('sqlite:///justjoin.sqlite3', echo=True)
     conn = sqlite3.connect('justjoin.sqlite3')
@@ -265,7 +265,8 @@ def run_justjoin_etl():
         CREATE TABLE IF NOT EXISTS skills(
             id VARCHAR(300),
             name VARCHAR(50),
-            level INT
+            level INT,
+            FOREIGN KEY (id) REFERENCES offers(id)
     );
 """
 
@@ -275,7 +276,8 @@ def run_justjoin_etl():
             type VARCHAR(100),
             from_salary INT,
             to_salary INT,
-            currency VARCHAR(10)
+            currency VARCHAR(10),
+            FOREIGN KEY (id) REFERENCES offers(id)
     );
 """
 
