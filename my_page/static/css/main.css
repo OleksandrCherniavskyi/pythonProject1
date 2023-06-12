@@ -1,7 +1,7 @@
 .megacontainer {
-  border: 1px solid #ccc;
+  border: 2px solid #ccc;
   margin: 0 auto;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
   max-width: 50%;
   min-width: 500px;
 }
@@ -10,28 +10,42 @@
   border: 1px solid #ccc;
   margin: 0 auto;
   margin-bottom: 10px;
-  max-width: 50%;
+  width: inherit;
   min-width: 500px;
+
 }
 
 .megaheader {
   padding: 10px;
   cursor: pointer;
-  background-color: #f0f0f0;
+  background-color: #6096B4;
+  font-weight: bold;
+  text-align: center;
+  color: #EEE9DA;
 }
 
 .header {
   padding: 10px;
   cursor: pointer;
-  background-color: #025464;
+  background-color: #93BFCF;
+  font-weight: bold;
+  text-align: center;
+  color: #3F4E4F
 }
 
 .content {
-  padding: 100px;
+  padding: 1px;
   display: none;
 }
 
 .expand-icon {
   float: right;
   font-weight: bold;
+}
+.spacer {
+    margin-top: 15px;
+}
+
+body {
+  font-family: Monaco, monospace;
 }
