@@ -2,6 +2,8 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path("", views.main, name="main"),
-    path("work_type/", views.work_type, name="work_type"),
+    path("week", views.week, name="week"),
+    path("month", views.month, name="month"),
+    path("quartal", views.quartal, name="quartal"),
+
 ]

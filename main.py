@@ -26,7 +26,7 @@ def run_justjoin_etl():
     response = requests.get('https://justjoin.it/api/offers')
     data = response.json()
     data_in = []
-    yesterday = datetime.date.today() - datetime.timedelta(days=2)
+    yesterday = datetime.date.today() - datetime.timedelta(days=1)
     yesterday_formatted = yesterday.strftime('%Y-%m-%d')
 
     for offer in data:
@@ -222,8 +222,8 @@ def run_justjoin_etl():
         return brands_office_df
 
     # Validate
-    #if check_if_valid_data(offers()):
-    #    print("Data valid, proceed to Load stage Offers")
+    if check_if_valid_data(offers()):
+        print("Data valid, proceed to Load stage Offers")
     # Load
     engine = create_engine('sqlite:///justjoin.sqlite3', echo=True)
     conn = sqlite3.connect('justjoin.sqlite3')
@@ -281,31 +281,32 @@ def run_justjoin_etl():
     );
 """
 
-    cursor.execute(offers_table_query)
-    cursor.execute(brands_table_query)
-    cursor.execute(brands_office_table_query)
-    cursor.execute(skills_table_query)
-    cursor.execute(employment_types_query)
+    #cursor.execute(offers_table_query)
     try:
-        offers().to_sql("offers", engine, index=False, if_exists='append')
+        offers().to_sql("offers", engine, if_exists='append', index=False)
     except:
         print("Data already exists in the table offers")
-    try:
-        location().to_sql("brands_office", engine, index=False, if_exists='append')
-    except:
-        print("Data already exists in the table brands_office")
-    try:
-        skills().to_sql("skills", engine, index=False, if_exists='append')
-    except:
-        print("Data already exists in the table skills")
-    try:
-        employment().to_sql('employment_types', engine, index=False, if_exists='append')
-    except:
-        print("Data already exists in the table employment_types")
+    cursor.execute(brands_table_query)
     try:
         brands().to_sql("brands", engine, index=False, if_exists='append')
     except:
         print("Data already exists in the table brands")
+    cursor.execute(brands_office_table_query)
+    try:
+        location().to_sql("brands_office", engine, index=False, if_exists='append')
+    except:
+        print("Data already exists in the table brands_office")
+    cursor.execute(skills_table_query)
+    try:
+        skills().to_sql("skills", engine, index=False, if_exists='append')
+    except:
+        print("Data already exists in the table skills")
+    cursor.execute(employment_types_query)
+    try:
+        employment().to_sql('employment_types', engine, index=False, if_exists='append')
+    except:
+        print("Data already exists in the table employment_types")
+
 
     conn.close()
     print("Close database successfully")
