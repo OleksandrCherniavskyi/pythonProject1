@@ -26,7 +26,7 @@ def run_justjoin_etl():
     response = requests.get('https://justjoin.it/api/offers')
     data = response.json()
     data_in = []
-    yesterday = datetime.date.today() - datetime.timedelta(days=2)
+    yesterday = datetime.date.today() - datetime.timedelta(days=1)
     yesterday_formatted = yesterday.strftime('%Y-%m-%d')
 
     for offer in data:
