@@ -1,0 +1,31 @@
+{% block content %}
+
+<div><canvas id="chart8" ></canvas></div>
+
+<script>
+
+  const ctx8 = document.getElementById('chart8');
+  new Chart(ctx8, {
+    type: 'bar',
+    data: {
+    labels: [{% for skill in top_skills_data %} "{{ skill.name }}", {% endfor %}],
+    datasets: [{
+      label: '',
+      data: [{% for skill in top_skills_data %} "{{ skill.skill_count }}", {% endfor %}],
+      backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+      borderColor: 'rgb(75, 192, 192)',
+
+    }]
+  },
+
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+
+</script>
+  {% endblock content %}

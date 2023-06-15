@@ -1,0 +1,47 @@
+
+
+{% block content %}
+
+
+
+<canvas id="chart2"></canvas>
+
+
+<script>
+  const ctx2 = document.getElementById('chart2').getContext('2d');
+  new Chart(ctx2, {
+    type: 'bubble',
+    data: {
+      datasets: [{
+        label: 'Top Skills',
+        data: [
+          {% for skill in top_skills %}
+            { x: {{ skill.skill_count }}, y: {{ skill.avg_level }}, r: 15, description: "{{ skill.name }}" },
+          {% endfor %}
+        ],
+        backgroundColor: 'rgb(255, 99, 132)'
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      },
+      plugins: {
+        tooltip: {
+          callbacks: {
+            label: function(context) {
+              var dataPoint = context.dataset.data[context.dataIndex];
+              return dataPoint.description;
+            }
+          }
+        }
+      }
+    }
+  });
+</script>
+
+
+
+{% endblock content %}

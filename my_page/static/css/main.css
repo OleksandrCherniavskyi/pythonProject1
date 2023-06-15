@@ -1,0 +1,51 @@
+.megacontainer {
+  border: 2px solid #ccc;
+  margin: 0 auto;
+  margin-bottom: 12px;
+  max-width: 50%;
+  min-width: 500px;
+}
+
+.container {
+  border: 1px solid #ccc;
+  margin: 0 auto;
+  margin-bottom: 10px;
+  width: inherit;
+  min-width: 500px;
+
+}
+
+.megaheader {
+  padding: 10px;
+  cursor: pointer;
+  background-color: #6096B4;
+  font-weight: bold;
+  text-align: center;
+  color: #EEE9DA;
+}
+
+.header {
+  padding: 10px;
+  cursor: pointer;
+  background-color: #93BFCF;
+  font-weight: bold;
+  text-align: center;
+  color: #3F4E4F
+}
+
+.content {
+  padding: 1px;
+  display: none;
+}
+
+.expand-icon {
+  float: right;
+  font-weight: bold;
+}
+.spacer {
+    margin-top: 15px;
+}
+
+body {
+  font-family: Monaco, monospace;
+}
