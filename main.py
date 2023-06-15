@@ -26,7 +26,7 @@ def run_justjoin_etl():
     response = requests.get('https://justjoin.it/api/offers')
     data = response.json()
     data_in = []
-    yesterday = datetime.date.today() - datetime.timedelta(days=1)
+    yesterday = datetime.date.today() - datetime.timedelta(days=14)
     yesterday_formatted = yesterday.strftime('%Y-%m-%d')
 
     for offer in data:
@@ -234,8 +234,8 @@ def run_justjoin_etl():
         id VARCHAR(300) PRIMARY KEY,
         published_at DATE,
         title VARCHAR(100) ,
-        marker_icon VARCHAR(100),
-        experience_level VARCHAR(50),
+        marker_icon VARCHAR(30),
+        experience_level VARCHAR(30),
         city VARCHAR(100),
         country_code VARCHAR(10),
         remote VARCHAR(50),
@@ -281,7 +281,7 @@ def run_justjoin_etl():
     );
 """
 
-    #cursor.execute(offers_table_query)
+    cursor.execute(offers_table_query)
     try:
         offers().to_sql("offers", engine, if_exists='append', index=False)
     except:
