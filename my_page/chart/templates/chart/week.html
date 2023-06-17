@@ -4,17 +4,20 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'css/main.css' %}">
 <script src="{% static 'js/main.js' %}"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <div class="spacer"></div>
 
 <div class="megacontainer">
+
   <div class="megaheader" onclick="toggleContent(this)">
     Positions
     <span class="expand-icon">+</span>
   </div>
 
   <div class="content">
+    <div class="spacer"></div>
     <div class="container">
       <div class="header" onclick="toggleContent(this)">
         Positions top
@@ -103,6 +106,7 @@
     <span class="expand-icon">+</span>
   </div>
   <div Class="content">
+    <div class="spacer"></div>
     <div class="container">
       <div class="header" onclick="toggleContent(this)">
         Top specializations
@@ -186,13 +190,13 @@
   </div>
 </div>
 
-
 <div class="megacontainer">
   <div class="megaheader" onclick="toggleContent(this)">
     Location and remote
     <span class="expand-icon">+</span>
   </div>
   <div Class="content">
+    <div class="spacer"></div>
     <div class="container">
       <div class="header" onclick="toggleContent(this)">
         Positions from most popular locations
@@ -219,7 +223,7 @@
 </div>
 
 
-<div class="container">
+<div class="megacontainer">
   <div class="header" onclick="toggleContent(this)">
     Popular skills and rate
     <span class="expand-icon">+</span>
@@ -230,8 +234,7 @@
 </div>
 
 
-
-<div class="container">
+<div class="megacontainer">
   <div class="header" onclick="toggleContent(this)">
     Positions on day
     <span class="expand-icon">+</span>
@@ -241,7 +244,7 @@
   </div>
 </div>
 
-<div class="container">
+<div class="megacontainer">
   <div class="header" onclick="toggleContent(this)">
     Positions for experience level
     <span class="expand-icon">+</span>
@@ -251,8 +254,7 @@
   </div>
 </div>
 
-
-<div class="container">
+<div class="megacontainer">
   <div class="header" onclick="toggleContent(this)">
     Dependency worktype  level to experience
     <span class="expand-icon">+</span>
@@ -261,37 +263,5 @@
     {% include 'chart/experience_to_work_type.html' %}
   </div>
 </div>
-
-<script>
-
-
-function toggleContent(header) {
-  const container = header.parentNode;
-  const content = container.querySelector('.content');
-  const expandIcon = container.querySelector('.expand-icon')
-  // Check if the content is currently visible
-  const isContentVisible = content.style.display !== 'none'
-  // Hide all other content elements except the clicked one
-  const allContainers = document.querySelectorAll('.container');
-  allContainers.forEach((container) => {
-    const content = container.querySelector('.content');
-    const expandIcon = container.querySelector('.expand-icon')
-    if (container !== header.parentNode) {
-      content.style.display = 'none';
-      expandIcon.innerText = '+';
-    }
-  })
-  // Toggle the visibility of the clicked container
-  if (!isContentVisible) {
-    content.style.display = 'block';
-    expandIcon.innerText = '-';
-  } else {
-    content.style.display = 'none';
-    expandIcon.innerText = '+';
-  }
-}
-
-
-</script>
 
 {% endblock %}

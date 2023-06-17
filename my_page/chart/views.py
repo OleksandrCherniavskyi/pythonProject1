@@ -857,3 +857,7 @@ def quartal(request):
         'work_type_remote': work_type_remote,
     }
     return render(request, 'chart/quartal.html', context)
+
+
+def start(request):
+    return render(request, 'start.html')

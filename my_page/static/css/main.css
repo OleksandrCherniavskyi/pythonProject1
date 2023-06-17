@@ -1,5 +1,5 @@
 .megacontainer {
-  border: 2px solid #ccc;
+  border: 3px solid #222831;
   margin: 0 auto;
   margin-bottom: 12px;
   max-width: 50%;
@@ -7,7 +7,7 @@
 }
 
 .container {
-  border: 1px solid #ccc;
+  border: 1px solid #222831;
   margin: 0 auto;
   margin-bottom: 10px;
   width: inherit;
@@ -18,19 +18,20 @@
 .megaheader {
   padding: 10px;
   cursor: pointer;
-  background-color: #6096B4;
+  background-color: #00ADB5;
   font-weight: bold;
   text-align: center;
-  color: #EEE9DA;
+  color: #393E46;
+  font-size: 24px;
 }
 
 .header {
   padding: 10px;
   cursor: pointer;
-  background-color: #93BFCF;
+  background-color: #EEEEEE;
   font-weight: bold;
   text-align: center;
-  color: #3F4E4F
+  color: #393E46;
 }
 
 .content {

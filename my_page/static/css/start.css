@@ -1,0 +1,20 @@
+.button-container {
+  padding: 100px;
+  text-align: center;
+
+}
+
+.term {
+  display: inline-block;
+  margin: 2%;
+  padding: 10px 20px;
+  background-color: #00ADB5;
+  color: #EEEEEE;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 18px;
+}
+
+.term:hover {
+  background-color: #555;
+}
