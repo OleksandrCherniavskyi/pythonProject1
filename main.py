@@ -221,9 +221,9 @@ def run_justjoin_etl():
         ])
         return brands_office_df
 
-    ## Validate
-    #if check_if_valid_data(offers()):
-    #    print("Data valid, proceed to Load stage Offers")
+    # Validate
+    if check_if_valid_data(offers()):
+        print("Data valid, proceed to Load stage Offers")
     # Load
     engine = create_engine('sqlite:///justjoin.sqlite3', echo=True)
     conn = sqlite3.connect('justjoin.sqlite3')
