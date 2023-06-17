@@ -1,14 +1,18 @@
 
-.navbar {
-  background-color: #C4DFDF;
-}
+  .navbar {
+    background-color: #0A224E;
 
-.navbar-brand {
-  color: white;
-  font-weight: bold;
-}
+  }
 
-.navbar-nav .nav-link {
-  color: white;
-  font-weight: bold;
-}
+  .navbar-brand {
+    color: #FFFFFF;
+    font-weight: bold;
+  }
+
+  .nav-link {
+    font-weight: bold;
+  }
+
+
+
+
