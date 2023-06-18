@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'my_page.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'C:/Users/bootbyt/PycharmProjects/pythonProject1/justjoin.sqlite3',
+        'NAME': 'justjoin.sqlite3',
     }
 }
 

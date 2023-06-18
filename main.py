@@ -226,7 +226,7 @@ def run_justjoin_etl():
     if check_if_valid_data(offers()):
         print("Data valid, proceed to Load stage Offers")
     # Load
-    engine = create_engine('sqlite:///justjoin.sqlite3', echo=True)
+    engine = create_engine('sqlite:///my_page/justjoin.sqlite3', echo=True)
     conn = sqlite3.connect('justjoin.sqlite3')
     cursor = conn.cursor()
 
