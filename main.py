@@ -167,7 +167,8 @@ def run_justjoin_etl():
             o_company_size = offer["company_size"]
             if o_company_size is not None:
                 o_company_size = o_company_size.replace(' ', '')
-                o_company_size = o_company_size.replace(',', '.')
+                o_company_size = o_company_size.replace('.', '')
+                o_company_size = o_company_size.replace(',', '')
                 o_company_size = o_company_size.replace('+', '')
                 o_company_size = o_company_size.replace('>', '')
                 o_company_size = o_company_size.replace('<', '')
@@ -281,19 +282,34 @@ def run_justjoin_etl():
     );
 """
 
+    # Verificate primary key
+    exiting_offers_query = "SELECT * FROM offers"
+    exiting_brands_query = "SELECT * FROM brands"
+    exiting_office_query = "SELECT * FROM brands_office"
+
+
+
+
     cursor.execute(offers_table_query)
     try:
-        offers().to_sql("offers", engine, if_exists='append', index=False)
+        exiting_offers = pd.read_sql_query(exiting_offers_query, conn)
+        new_offers = offers()[~offers()['id'].isin(exiting_offers['id'])]
+        new_offers.to_sql("offers", engine, if_exists='append', index=False)
     except:
         print("Data already exists in the table offers")
     cursor.execute(brands_table_query)
+
     try:
-        brands().to_sql("brands", engine, index=False, if_exists='append')
+        exiting_brands = pd.read_sql_query(exiting_brands_query, conn)
+        new_brands = brands()[~brands()['company_name'].isin(exiting_brands['company_name'])]
+        new_brands.to_sql("brands", engine, index=False, if_exists='append')
     except:
         print("Data already exists in the table brands")
     cursor.execute(brands_office_table_query)
     try:
-        location().to_sql("brands_office", engine, index=False, if_exists='append')
+        exiting_office = pd.read_sql_query(exiting_office_query, conn)
+        new_office = location()[~location()['slug'].isin(exiting_office['slug'])]
+        new_office.to_sql("brands_office", engine, index=False, if_exists='append')
     except:
         print("Data already exists in the table brands_office")
     cursor.execute(skills_table_query)
