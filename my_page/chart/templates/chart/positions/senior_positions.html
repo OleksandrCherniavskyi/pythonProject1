@@ -1,0 +1,33 @@
+{% block content %}
+
+<div><canvas id="senior_positions" ></canvas></div>
+
+<script>
+  const ctx_senior_positions = document.getElementById('senior_positions');
+
+  new Chart(ctx_senior_positions, {
+    type: 'bar',
+    data: {
+      labels: [{% for position in senior_positions %} "{{ position.title }}", {% endfor %}],
+      datasets: [{
+        label: '',
+        data: [{% for position in senior_positions %} {{ position.title_count }}, {% endfor %}],
+        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+        borderColor: 'rgb(75, 192, 192)',
+
+    }]
+  },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+
+</script>
+
+
+
+{% endblock content %}

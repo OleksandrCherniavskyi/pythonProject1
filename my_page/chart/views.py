@@ -249,6 +249,21 @@ def week(request):
         .values('experience_level') \
         .annotate(count_workplace_type=Count('workplace_type'))
 
+    junior_positions = Offers.objects.filter(published_at__gte=quartal_ago, experience_level='junior') \
+                     .values('title') \
+                     .annotate(title_count=Count('title')) \
+                     .order_by('-title_count')[:7]
+
+    mid_positions = Offers.objects.filter(published_at__gte=quartal_ago, experience_level='mid') \
+                           .values('title') \
+                           .annotate(title_count=Count('title')) \
+                           .order_by('-title_count')[:7]
+
+    senior_positions = Offers.objects.filter(published_at__gte=quartal_ago, experience_level='senior') \
+                        .values('title') \
+                        .annotate(title_count=Count('title')) \
+                        .order_by('-title_count')[:7]
+
 
     context = {
         'top_offers': top_offers,
@@ -290,6 +305,9 @@ def week(request):
         'work_type_office': work_type_office,
         'work_type_hybrid': work_type_hybrid,
         'work_type_remote': work_type_remote,
+        'junior_positions': junior_positions,
+        'mid_positions': mid_positions,
+        'senior_positions': senior_positions
     }
     return render(request, 'chart/week.html', context)
 
@@ -532,6 +550,22 @@ def month(request):
         .values('experience_level') \
         .annotate(count_workplace_type=Count('workplace_type'))
 
+    junior_positions = Offers.objects.filter(published_at__gte=quartal_ago, experience_level='junior') \
+                     .values('title') \
+                     .annotate(title_count=Count('title')) \
+                     .order_by('-title_count')[:7]
+
+    mid_positions = Offers.objects.filter(published_at__gte=quartal_ago, experience_level='mid') \
+                           .values('title') \
+                           .annotate(title_count=Count('title')) \
+                           .order_by('-title_count')[:7]
+
+    senior_positions = Offers.objects.filter(published_at__gte=quartal_ago, experience_level='senior') \
+                        .values('title') \
+                        .annotate(title_count=Count('title')) \
+                        .order_by('-title_count')[:7]
+
+
 
     context = {
         'top_offers': top_offers,
@@ -573,6 +607,9 @@ def month(request):
         'work_type_office': work_type_office,
         'work_type_hybrid': work_type_hybrid,
         'work_type_remote': work_type_remote,
+        'junior_positions': junior_positions,
+        'mid_positions': mid_positions,
+        'senior_positions': senior_positions
     }
     return render(request, 'chart/month.html', context)
 
@@ -603,8 +640,7 @@ def quartal(request):
                                .annotate(city_count=Count('city')) \
                                .order_by('-city_count')[:7]
 
-    positions_on_day = Offers.objects.exclude(published_at="2023-05-23") \
-                           .values('published_at') \
+    positions_on_day = Offers.objects.values('published_at') \
                            .annotate(title_count=Count('title')) \
                            .order_by('published_at')
 
@@ -814,6 +850,20 @@ def quartal(request):
         .values('experience_level') \
         .annotate(count_workplace_type=Count('workplace_type'))
 
+    junior_positions = Offers.objects.filter(published_at__gte=quartal_ago, experience_level='junior') \
+                     .values('title') \
+                     .annotate(title_count=Count('title')) \
+                     .order_by('-title_count')[:7]
+
+    mid_positions = Offers.objects.filter(published_at__gte=quartal_ago, experience_level='mid') \
+                           .values('title') \
+                           .annotate(title_count=Count('title')) \
+                           .order_by('-title_count')[:7]
+
+    senior_positions = Offers.objects.filter(published_at__gte=quartal_ago, experience_level='senior') \
+                        .values('title') \
+                        .annotate(title_count=Count('title')) \
+                        .order_by('-title_count')[:7]
 
     context = {
         'top_offers': top_offers,
@@ -855,6 +905,9 @@ def quartal(request):
         'work_type_office': work_type_office,
         'work_type_hybrid': work_type_hybrid,
         'work_type_remote': work_type_remote,
+        'junior_positions': junior_positions,
+        'mid_positions': mid_positions,
+        'senior_positions': senior_positions
     }
     return render(request, 'chart/quartal.html', context)
 

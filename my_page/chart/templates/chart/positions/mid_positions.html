@@ -1,0 +1,33 @@
+{% block content %}
+
+<div><canvas id="mid_positions" ></canvas></div>
+
+<script>
+  const ctx_mid_positions = document.getElementById('mid_positions');
+
+  new Chart(ctx_mid_positions, {
+    type: 'bar',
+    data: {
+      labels: [{% for position in mid_positions %} "{{ position.title }}", {% endfor %}],
+      datasets: [{
+        label: '',
+        data: [{% for position in mid_positions %} {{ position.title_count }}, {% endfor %}],
+        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+        borderColor: 'rgb(75, 192, 192)',
+
+    }]
+  },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+
+</script>
+
+
+
+{% endblock content %}
