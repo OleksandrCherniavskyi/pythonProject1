@@ -2,20 +2,15 @@
 FROM python:3.10
 
 # Set the working directory in the container
-WORKDIR /workspace
+WORKDIR /app
 
 # Copy the requirements file and install dependencies
 
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+COPY requirements.txt requirements.txt
+RUN pip3 install -r requirements.txt
 
 # Copy the entire project directory into the container
-COPY my_page /workspace/my_page
-COPY main.py /workspace/main.py
-# Expose the port your Django app will run on
-EXPOSE 8000
-
-CMD ["cd", "my_page"]
+COPY . .
 
 # Specify the command to run your Django app
-CMD ["python", "manage.py", "runserver", "127.0.0.1:8000"]
+CMD ["python", "manage.py", "runserver", "0.0.0.1:8000"]
