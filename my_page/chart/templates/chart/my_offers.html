@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div id="tableContainer">
+        <div id="tableWrapper">
+            <table id="my_offers">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Company name</th>
+                        <th>City</th>
+                        <th>Work type</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for offer in my_offers %}
+                        <tr>
+                            <td>{{ offer.title }}</td>
+                            <td>{{ offer.company_name }}</td>
+                            <td>{{ offer.city }}</td>
+                            <td>{{ offer.workplace_type }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#my_offers').DataTable({
+                searching: false,
+                paging: false,
+                info: false,
+                order: [[1, 'desc']]
+            });
+        });
+    </script>
+{% endblock content %}

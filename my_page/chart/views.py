@@ -1,5 +1,5 @@
 
-from .models import Offers, Skills, BrandsOffice
+from .models import Offers, Skills, BrandsOffice, EmploymentTypes
 from django.shortcuts import render
 from django.db.models import Count, Avg
 from django.utils.timezone import now
@@ -264,6 +264,48 @@ def week(request):
                         .annotate(title_count=Count('title')) \
                         .order_by('-title_count')[:7]
 
+    min_avg1 = EmploymentTypes.objects.filter(id__in=id_top_offer1, currency='pln') \
+        .values('type').annotate(type_count=Count('type'), avg_level=Avg('from_salary')).order_by('-type_count')
+
+    max_avg1 = EmploymentTypes.objects.filter(id__in=id_top_offer1, currency='pln') \
+        .values('type').annotate(type_count=Count('type'), avg_level=Avg('to_salary')).order_by('-type_count')
+
+    min_avg2 = EmploymentTypes.objects.filter(id__in=id_top_offer2, currency='pln') \
+        .values('type').annotate(type_count=Count('type'), avg_level=Avg('from_salary')).order_by('-type_count')
+
+    max_avg2 = EmploymentTypes.objects.filter(id__in=id_top_offer2, currency='pln') \
+        .values('type').annotate(type_count=Count('type'), avg_level=Avg('to_salary')).order_by('-type_count')
+
+    min_avg3 = EmploymentTypes.objects.filter(id__in=id_top_offer3, currency='pln') \
+        .values('type').annotate(type_count=Count('type'), avg_level=Avg('from_salary')).order_by('-type_count')
+
+    max_avg3 = EmploymentTypes.objects.filter(id__in=id_top_offer3, currency='pln') \
+        .values('type').annotate(type_count=Count('type'), avg_level=Avg('to_salary')).order_by('-type_count')
+
+    min_avg4 = EmploymentTypes.objects.filter(id__in=id_top_offer4, currency='pln') \
+        .values('type').annotate(type_count=Count('type'), avg_level=Avg('from_salary')).order_by('-type_count')
+
+    max_avg4 = EmploymentTypes.objects.filter(id__in=id_top_offer4, currency='pln') \
+        .values('type').annotate(type_count=Count('type'), avg_level=Avg('to_salary')).order_by('-type_count')
+
+    min_avg5 = EmploymentTypes.objects.filter(id__in=id_top_offer5, currency='pln') \
+        .values('type').annotate(type_count=Count('type'), avg_level=Avg('from_salary')).order_by('-type_count')
+
+    max_avg5 = EmploymentTypes.objects.filter(id__in=id_top_offer5, currency='pln') \
+        .values('type').annotate(type_count=Count('type'), avg_level=Avg('to_salary')).order_by('-type_count')
+
+    min_avg6 = EmploymentTypes.objects.filter(id__in=id_top_offer6, currency='pln') \
+        .values('type').annotate(type_count=Count('type'), avg_level=Avg('from_salary')).order_by('-type_count')
+
+    max_avg6 = EmploymentTypes.objects.filter(id__in=id_top_offer6, currency='pln') \
+        .values('type').annotate(type_count=Count('type'), avg_level=Avg('to_salary')).order_by('-type_count')
+
+    min_avg7 = EmploymentTypes.objects.filter(id__in=id_top_offer7, currency='pln') \
+        .values('type').annotate(type_count=Count('type'), avg_level=Avg('from_salary')).order_by('-type_count')
+
+    max_avg7 = EmploymentTypes.objects.filter(id__in=id_top_offer7, currency='pln') \
+        .values('type').annotate(type_count=Count('type'), avg_level=Avg('to_salary')).order_by('-type_count')
+
 
     context = {
         'top_offers': top_offers,
@@ -307,7 +349,21 @@ def week(request):
         'work_type_remote': work_type_remote,
         'junior_positions': junior_positions,
         'mid_positions': mid_positions,
-        'senior_positions': senior_positions
+        'senior_positions': senior_positions,
+        'min_avg1': min_avg1,
+        'max_avg1': max_avg1,
+        'min_avg2': min_avg2,
+        'max_avg2': max_avg2,
+        'min_avg3': min_avg3,
+        'max_avg3': max_avg3,
+        'min_avg4': min_avg4,
+        'max_avg4': max_avg4,
+        'min_avg5': min_avg5,
+        'max_avg5': max_avg5,
+        'min_avg6': min_avg6,
+        'max_avg6': max_avg6,
+        'min_avg7': min_avg7,
+        'max_avg7': max_avg7
     }
     return render(request, 'chart/week.html', context)
 
@@ -565,7 +621,47 @@ def month(request):
                         .annotate(title_count=Count('title')) \
                         .order_by('-title_count')[:7]
 
+    min_avg1 = EmploymentTypes.objects.filter(id__in=id_top_offer1, currency='pln') \
+        .values('type').annotate(type_count=Count('type'), avg_level=Avg('from_salary')).order_by('-type_count')
 
+    max_avg1 = EmploymentTypes.objects.filter(id__in=id_top_offer1, currency='pln') \
+        .values('type').annotate(type_count=Count('type'), avg_level=Avg('to_salary')).order_by('-type_count')
+
+    min_avg2 = EmploymentTypes.objects.filter(id__in=id_top_offer2, currency='pln') \
+        .values('type').annotate(type_count=Count('type'), avg_level=Avg('from_salary')).order_by('-type_count')
+
+    max_avg2 = EmploymentTypes.objects.filter(id__in=id_top_offer2, currency='pln') \
+        .values('type').annotate(type_count=Count('type'), avg_level=Avg('to_salary')).order_by('-type_count')
+
+    min_avg3 = EmploymentTypes.objects.filter(id__in=id_top_offer3, currency='pln') \
+        .values('type').annotate(type_count=Count('type'), avg_level=Avg('from_salary')).order_by('-type_count')
+
+    max_avg3 = EmploymentTypes.objects.filter(id__in=id_top_offer3, currency='pln') \
+        .values('type').annotate(type_count=Count('type'), avg_level=Avg('to_salary')).order_by('-type_count')
+
+    min_avg4 = EmploymentTypes.objects.filter(id__in=id_top_offer4, currency='pln') \
+        .values('type').annotate(type_count=Count('type'), avg_level=Avg('from_salary')).order_by('-type_count')
+
+    max_avg4 = EmploymentTypes.objects.filter(id__in=id_top_offer4, currency='pln') \
+        .values('type').annotate(type_count=Count('type'), avg_level=Avg('to_salary')).order_by('-type_count')
+
+    min_avg5 = EmploymentTypes.objects.filter(id__in=id_top_offer5, currency='pln') \
+        .values('type').annotate(type_count=Count('type'), avg_level=Avg('from_salary')).order_by('-type_count')
+
+    max_avg5 = EmploymentTypes.objects.filter(id__in=id_top_offer5, currency='pln') \
+        .values('type').annotate(type_count=Count('type'), avg_level=Avg('to_salary')).order_by('-type_count')
+
+    min_avg6 = EmploymentTypes.objects.filter(id__in=id_top_offer6, currency='pln') \
+        .values('type').annotate(type_count=Count('type'), avg_level=Avg('from_salary')).order_by('-type_count')
+
+    max_avg6 = EmploymentTypes.objects.filter(id__in=id_top_offer6, currency='pln') \
+        .values('type').annotate(type_count=Count('type'), avg_level=Avg('to_salary')).order_by('-type_count')
+
+    min_avg7 = EmploymentTypes.objects.filter(id__in=id_top_offer7, currency='pln') \
+        .values('type').annotate(type_count=Count('type'), avg_level=Avg('from_salary')).order_by('-type_count')
+
+    max_avg7 = EmploymentTypes.objects.filter(id__in=id_top_offer7, currency='pln') \
+        .values('type').annotate(type_count=Count('type'), avg_level=Avg('to_salary')).order_by('-type_count')
 
     context = {
         'top_offers': top_offers,
@@ -609,7 +705,21 @@ def month(request):
         'work_type_remote': work_type_remote,
         'junior_positions': junior_positions,
         'mid_positions': mid_positions,
-        'senior_positions': senior_positions
+        'senior_positions': senior_positions,
+        'min_avg1': min_avg1,
+        'max_avg1': max_avg1,
+        'min_avg2': min_avg2,
+        'max_avg2': max_avg2,
+        'min_avg3': min_avg3,
+        'max_avg3': max_avg3,
+        'min_avg4': min_avg4,
+        'max_avg4': max_avg4,
+        'min_avg5': min_avg5,
+        'max_avg5': max_avg5,
+        'min_avg6': min_avg6,
+        'max_avg6': max_avg6,
+        'min_avg7': min_avg7,
+        'max_avg7': max_avg7
     }
     return render(request, 'chart/month.html', context)
 
@@ -865,6 +975,48 @@ def quartal(request):
                         .annotate(title_count=Count('title')) \
                         .order_by('-title_count')[:7]
 
+    min_avg1 = EmploymentTypes.objects.filter(id__in=id_top_offer1, currency='pln') \
+        .values('type').annotate(type_count=Count('type'), avg_level=Avg('from_salary')).order_by('-type_count')
+
+    max_avg1 = EmploymentTypes.objects.filter(id__in=id_top_offer1, currency='pln') \
+        .values('type').annotate(type_count=Count('type'), avg_level=Avg('to_salary')).order_by('-type_count')
+
+    min_avg2 = EmploymentTypes.objects.filter(id__in=id_top_offer2, currency='pln') \
+        .values('type').annotate(type_count=Count('type'), avg_level=Avg('from_salary')).order_by('-type_count')
+
+    max_avg2 = EmploymentTypes.objects.filter(id__in=id_top_offer2, currency='pln') \
+        .values('type').annotate(type_count=Count('type'), avg_level=Avg('to_salary')).order_by('-type_count')
+
+    min_avg3 = EmploymentTypes.objects.filter(id__in=id_top_offer3, currency='pln') \
+        .values('type').annotate(type_count=Count('type'), avg_level=Avg('from_salary')).order_by('-type_count')
+
+    max_avg3 = EmploymentTypes.objects.filter(id__in=id_top_offer3, currency='pln') \
+        .values('type').annotate(type_count=Count('type'), avg_level=Avg('to_salary')).order_by('-type_count')
+
+    min_avg4 = EmploymentTypes.objects.filter(id__in=id_top_offer4, currency='pln') \
+        .values('type').annotate(type_count=Count('type'), avg_level=Avg('from_salary')).order_by('-type_count')
+
+    max_avg4 = EmploymentTypes.objects.filter(id__in=id_top_offer4, currency='pln') \
+        .values('type').annotate(type_count=Count('type'), avg_level=Avg('to_salary')).order_by('-type_count')
+
+    min_avg5 = EmploymentTypes.objects.filter(id__in=id_top_offer5, currency='pln') \
+        .values('type').annotate(type_count=Count('type'), avg_level=Avg('from_salary')).order_by('-type_count')
+
+    max_avg5 = EmploymentTypes.objects.filter(id__in=id_top_offer5, currency='pln') \
+        .values('type').annotate(type_count=Count('type'), avg_level=Avg('to_salary')).order_by('-type_count')
+
+    min_avg6 = EmploymentTypes.objects.filter(id__in=id_top_offer6, currency='pln') \
+        .values('type').annotate(type_count=Count('type'), avg_level=Avg('from_salary')).order_by('-type_count')
+
+    max_avg6 = EmploymentTypes.objects.filter(id__in=id_top_offer6, currency='pln') \
+        .values('type').annotate(type_count=Count('type'), avg_level=Avg('to_salary')).order_by('-type_count')
+
+    min_avg7 = EmploymentTypes.objects.filter(id__in=id_top_offer7, currency='pln') \
+        .values('type').annotate(type_count=Count('type'), avg_level=Avg('from_salary')).order_by('-type_count')
+
+    max_avg7 = EmploymentTypes.objects.filter(id__in=id_top_offer7, currency='pln') \
+        .values('type').annotate(type_count=Count('type'), avg_level=Avg('to_salary')).order_by('-type_count')
+
     context = {
         'top_offers': top_offers,
         'top_skills': top_skills,
@@ -907,10 +1059,35 @@ def quartal(request):
         'work_type_remote': work_type_remote,
         'junior_positions': junior_positions,
         'mid_positions': mid_positions,
-        'senior_positions': senior_positions
+        'senior_positions': senior_positions,
+        'min_avg1': min_avg1,
+        'max_avg1': max_avg1,
+        'min_avg2': min_avg2,
+        'max_avg2': max_avg2,
+        'min_avg3': min_avg3,
+        'max_avg3': max_avg3,
+        'min_avg4': min_avg4,
+        'max_avg4': max_avg4,
+        'min_avg5': min_avg5,
+        'max_avg5': max_avg5,
+        'min_avg6': min_avg6,
+        'max_avg6': max_avg6,
+        'min_avg7': min_avg7,
+        'max_avg7': max_avg7,
     }
     return render(request, 'chart/quartal.html', context)
 
 
 def start(request):
     return render(request, 'start.html')
+
+def my_offers(request):
+
+    my_offers = Offers.objects.filter(published_at__gte=seven_days_ago,
+                      experience_level='junior', marker_icon__in=['data', 'python']) \
+
+    context = {
+        'my_offers': my_offers
+
+    }
+    return render(request, 'chart/my_offers.html', context)
