@@ -249,17 +249,17 @@ def week(request):
         .values('experience_level') \
         .annotate(count_workplace_type=Count('workplace_type'))
 
-    junior_positions = Offers.objects.filter(published_at__gte=quartal_ago, experience_level='junior') \
+    junior_positions = Offers.objects.filter(published_at__gte=seven_days_ago, experience_level='junior') \
                      .values('title') \
                      .annotate(title_count=Count('title')) \
                      .order_by('-title_count')[:7]
 
-    mid_positions = Offers.objects.filter(published_at__gte=quartal_ago, experience_level='mid') \
+    mid_positions = Offers.objects.filter(published_at__gte=seven_days_ago, experience_level='mid') \
                            .values('title') \
                            .annotate(title_count=Count('title')) \
                            .order_by('-title_count')[:7]
 
-    senior_positions = Offers.objects.filter(published_at__gte=quartal_ago, experience_level='senior') \
+    senior_positions = Offers.objects.filter(published_at__gte=seven_days_ago, experience_level='senior') \
                         .values('title') \
                         .annotate(title_count=Count('title')) \
                         .order_by('-title_count')[:7]
@@ -606,17 +606,17 @@ def month(request):
         .values('experience_level') \
         .annotate(count_workplace_type=Count('workplace_type'))
 
-    junior_positions = Offers.objects.filter(published_at__gte=quartal_ago, experience_level='junior') \
+    junior_positions = Offers.objects.filter(published_at__gte=month_ago, experience_level='junior') \
                      .values('title') \
                      .annotate(title_count=Count('title')) \
                      .order_by('-title_count')[:7]
 
-    mid_positions = Offers.objects.filter(published_at__gte=quartal_ago, experience_level='mid') \
+    mid_positions = Offers.objects.filter(published_at__gte=month_ago, experience_level='mid') \
                            .values('title') \
                            .annotate(title_count=Count('title')) \
                            .order_by('-title_count')[:7]
 
-    senior_positions = Offers.objects.filter(published_at__gte=quartal_ago, experience_level='senior') \
+    senior_positions = Offers.objects.filter(published_at__gte=month_ago, experience_level='senior') \
                         .values('title') \
                         .annotate(title_count=Count('title')) \
                         .order_by('-title_count')[:7]
