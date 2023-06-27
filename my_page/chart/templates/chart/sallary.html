@@ -1,78 +1,70 @@
 {% block content %}
-{% load static %}
-
-<link rel="stylesheet" type="text/css" href="{% static 'css/sallary.css' %}">
-
-    <div id="tableContainer">
-        <div id="tableWrapper">
-            <table id="sallary">
-                <thead>
-                    <tr>
-                        <th style="width: 200px;">Offers</th>
-                        <th>uop_min</th>
-                        <th>uop_max</th>
-                        <th>b2b_min</th>
-                        <th>b2b_max</th>
 
 
-                    </tr>
-                </thead>
-                <tbody>
-                        <tr>
-                            <td>
-                                {% for offer in top_offer1 %}  {{ offer.title }} {% endfor %}
-                                {% for offer in top_offer2 %}  {{ offer.title }} {% endfor %}
-                                {% for offer in top_offer3 %}  {{ offer.title }} {% endfor %}
-                                {% for offer in top_offer4 %}  {{ offer.title }} {% endfor %}
-                                {% for offer in top_offer5 %}  {{ offer.title }} {% endfor %}
-                                {% for offer in top_offer6 %}  {{ offer.title }} {% endfor %}
-                                {% for offer in top_offer7 %}  {{ offer.title }} {% endfor %}
-                            </td>
-                            <td>
-                                {% for item in min_avg1 %} {% if item.type == 'permanent' %}  {{ item.avg_level|floatformat:2 }}{% endif %}  {% endfor %}
-                                {% for item in min_avg2 %} {% if item.type == 'permanent' %}  {{ item.avg_level|floatformat:2 }}{% endif %}  {% endfor %}
-                                {% for item in min_avg3 %} {% if item.type == 'permanent' %}  {{ item.avg_level|floatformat:2 }}{% endif %}  {% endfor %}
-                                {% for item in min_avg4 %} {% if item.type == 'permanent' %}  {{ item.avg_level|floatformat:2 }}{% endif %}  {% endfor %}
-                                {% for item in min_avg5 %} {% if item.type == 'permanent' %}  {{ item.avg_level|floatformat:2 }}{% endif %}  {% endfor %}
-                                {% for item in min_avg6 %} {% if item.type == 'permanent' %}  {{ item.avg_level|floatformat:2 }}{% endif %}  {% endfor %}
-                                {% for item in min_avg7 %} {% if item.type == 'permanent' %}  {{ item.avg_level|floatformat:2 }}{% endif %}  {% endfor %}
+<div><canvas id="sallary"></canvas></div>
 
-                            </td>
-                            <td>
-                                {% for item in max_avg1 %} {% if item.type == 'permanent' %}  {{ item.avg_level|floatformat:2 }}{% endif %}  {% endfor %}
-                                {% for item in max_avg2 %} {% if item.type == 'permanent' %}  {{ item.avg_level|floatformat:2 }}{% endif %}  {% endfor %}
-                                {% for item in max_avg3 %} {% if item.type == 'permanent' %}  {{ item.avg_level|floatformat:2 }}{% endif %}  {% endfor %}
-                                {% for item in max_avg4 %} {% if item.type == 'permanent' %}  {{ item.avg_level|floatformat:2 }}{% endif %}  {% endfor %}
-                                {% for item in max_avg5 %} {% if item.type == 'permanent' %}  {{ item.avg_level|floatformat:2 }}{% endif %}  {% endfor %}
-                                {% for item in max_avg6 %} {% if item.type == 'permanent' %}  {{ item.avg_level|floatformat:2 }}{% endif %}  {% endfor %}
-                                {% for item in max_avg7 %} {% if item.type == 'permanent' %}  {{ item.avg_level|floatformat:2 }}{% endif %}  {% endfor %}
-                            </td>
-                            <td>
-                                {% for item in min_avg1 %} {% if item.type == 'b2b' %}  {{ item.avg_level|floatformat:2 }}{% endif %}  {% endfor %}
-                                {% for item in min_avg2 %} {% if item.type == 'b2b' %}  {{ item.avg_level|floatformat:2 }}{% endif %}  {% endfor %}
-                                {% for item in min_avg3 %} {% if item.type == 'b2b' %}  {{ item.avg_level|floatformat:2 }}{% endif %}  {% endfor %}
-                                {% for item in min_avg4 %} {% if item.type == 'b2b' %}  {{ item.avg_level|floatformat:2 }}{% endif %}  {% endfor %}
-                                {% for item in min_avg5 %} {% if item.type == 'b2b' %}  {{ item.avg_level|floatformat:2 }}{% endif %}  {% endfor %}
-                                {% for item in min_avg6 %} {% if item.type == 'b2b' %}  {{ item.avg_level|floatformat:2 }}{% endif %}  {% endfor %}
-                                {% for item in min_avg7 %} {% if item.type == 'b2b' %}  {{ item.avg_level|floatformat:2 }}{% endif %}  {% endfor %}
-                            </td>
-                            <td>
-                                {% for item in max_avg1 %} {% if item.type == 'b2b' %}  {{ item.avg_level|floatformat:2 }}{% endif %}  {% endfor %}
-                                {% for item in max_avg2 %} {% if item.type == 'b2b' %}  {{ item.avg_level|floatformat:2 }}{% endif %}  {% endfor %}
-                                {% for item in max_avg3 %} {% if item.type == 'b2b' %}  {{ item.avg_level|floatformat:2 }}{% endif %}  {% endfor %}
-                                {% for item in max_avg4 %} {% if item.type == 'b2b' %}  {{ item.avg_level|floatformat:2 }}{% endif %}  {% endfor %}
-                                {% for item in max_avg5 %} {% if item.type == 'b2b' %}  {{ item.avg_level|floatformat:2 }}{% endif %}  {% endfor %}
-                                {% for item in max_avg6 %} {% if item.type == 'b2b' %}  {{ item.avg_level|floatformat:2 }}{% endif %}  {% endfor %}
-                                {% for item in max_avg7 %} {% if item.type == 'b2b' %}  {{ item.avg_level|floatformat:2 }}{% endif %}  {% endfor %}
+<script>
+  const ctxsallary = document.getElementById('sallary');
 
-                            </td>
+  new Chart(ctxsallary, {
+    type: 'bar',
+    data: {
+      labels: [{% for offer in top_offers %} "{{ offer.title }}", {% endfor %}],
+      datasets:[
+      {
+        label: 'UoP',
+        data: [
+          [ {% for item in min_avg1 %} {% if item.type == 'permanent' %}  {{ item.avg_level|floatformat:2 }}{% endif %}  {% endfor %}, {% for item in max_avg1 %} {% if item.type == 'permanent' %}  {{ item.avg_level|floatformat:2 }}{% endif %}  {% endfor %}],
+          [ {% for item in min_avg2 %} {% if item.type == 'permanent' %}  {{ item.avg_level|floatformat:2 }}{% endif %}  {% endfor %}, {% for item in max_avg2 %} {% if item.type == 'permanent' %}  {{ item.avg_level|floatformat:2 }}{% endif %}  {% endfor %}],
+          [ {% for item in min_avg3 %} {% if item.type == 'permanent' %}  {{ item.avg_level|floatformat:2 }}{% endif %}  {% endfor %}, {% for item in max_avg3 %} {% if item.type == 'permanent' %}  {{ item.avg_level|floatformat:2 }}{% endif %}  {% endfor %}],
+          [ {% for item in min_avg4 %} {% if item.type == 'permanent' %}  {{ item.avg_level|floatformat:2 }}{% endif %}  {% endfor %}, {% for item in max_avg4 %} {% if item.type == 'permanent' %}  {{ item.avg_level|floatformat:2 }}{% endif %}  {% endfor %}],
+          [ {% for item in min_avg5 %} {% if item.type == 'permanent' %}  {{ item.avg_level|floatformat:2 }}{% endif %}  {% endfor %}, {% for item in max_avg5 %} {% if item.type == 'permanent' %}  {{ item.avg_level|floatformat:2 }}{% endif %}  {% endfor %}],
+          [ {% for item in min_avg6 %} {% if item.type == 'permanent' %}  {{ item.avg_level|floatformat:2 }}{% endif %}  {% endfor %}, {% for item in max_avg6 %} {% if item.type == 'permanent' %}  {{ item.avg_level|floatformat:2 }}{% endif %}  {% endfor %}],
+          [ {% for item in min_avg7 %} {% if item.type == 'permanent' %}  {{ item.avg_level|floatformat:2 }}{% endif %}  {% endfor %}, {% for item in max_avg7 %} {% if item.type == 'permanent' %}  {{ item.avg_level|floatformat:2 }}{% endif %}  {% endfor %}]
+
+        ],
+        backgroundColor: ['#FFCE56'],
+        borderColor: 'rgb(75, 192, 192)',
+
+      },
+      {
+        label: 'B2B',
+        data: [
+          [ {% for item in min_avg1 %} {% if item.type == 'b2b' %}  {{ item.avg_level|floatformat:2 }}{% endif %}  {% endfor %}, {% for item in max_avg1 %} {% if item.type == 'b2b' %}  {{ item.avg_level|floatformat:2 }}{% endif %}  {% endfor %}],
+          [ {% for item in min_avg2 %} {% if item.type == 'b2b' %}  {{ item.avg_level|floatformat:2 }}{% endif %}  {% endfor %}, {% for item in max_avg2 %} {% if item.type == 'b2b' %}  {{ item.avg_level|floatformat:2 }}{% endif %}  {% endfor %}],
+          [ {% for item in min_avg3 %} {% if item.type == 'b2b' %}  {{ item.avg_level|floatformat:2 }}{% endif %}  {% endfor %}, {% for item in max_avg3 %} {% if item.type == 'b2b' %}  {{ item.avg_level|floatformat:2 }}{% endif %}  {% endfor %}],
+          [ {% for item in min_avg4 %} {% if item.type == 'b2b' %}  {{ item.avg_level|floatformat:2 }}{% endif %}  {% endfor %}, {% for item in max_avg4 %} {% if item.type == 'b2b' %}  {{ item.avg_level|floatformat:2 }}{% endif %}  {% endfor %}],
+          [ {% for item in min_avg5 %} {% if item.type == 'b2b' %}  {{ item.avg_level|floatformat:2 }}{% endif %}  {% endfor %}, {% for item in max_avg5 %} {% if item.type == 'b2b' %}  {{ item.avg_level|floatformat:2 }}{% endif %}  {% endfor %}],
+          [ {% for item in min_avg6 %} {% if item.type == 'b2b' %}  {{ item.avg_level|floatformat:2 }}{% endif %}  {% endfor %}, {% for item in max_avg6 %} {% if item.type == 'b2b' %}  {{ item.avg_level|floatformat:2 }}{% endif %}  {% endfor %}],
+          [ {% for item in min_avg7 %} {% if item.type == 'b2b' %}  {{ item.avg_level|floatformat:2 }}{% endif %}  {% endfor %}, {% for item in max_avg7 %} {% if item.type == 'b2b' %}  {{ item.avg_level|floatformat:2 }}{% endif %}  {% endfor %}]
+        ],
+        backgroundColor: [ '#36A2EB'],
+        borderColor: 'rgb(75, 192, 192)',
+
+      }
+      ]
+  },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'top'
+        },
+        title: {
+          display: true,
+          text: 'with VAT'
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+
+</script>
 
 
-                        </tr>
-
-                </tbody>
-            </table>
-        </div>
-    </div>
 
 {% endblock content %}
