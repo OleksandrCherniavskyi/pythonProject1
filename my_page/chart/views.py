@@ -1,3 +1,4 @@
+from django.db.models.functions import ExtractWeek
 
 from .models import Offers, Skills, BrandsOffice, EmploymentTypes
 from django.shortcuts import render
@@ -305,8 +306,15 @@ def week(request):
     max_avg7 = EmploymentTypes.objects.filter(id__in=id_top_offer7, currency='pln') \
         .values('type').annotate(type_count=Count('type'), avg_level=Avg('to_salary')).order_by('-type_count')
 
+    week = Offers.objects.exclude(published_at__lt="2023-06-17") \
+        .values('published_at') \
+        .annotate(week_number=ExtractWeek('published_at')).order_by() \
+        .annotate(title_count=Count('title'))
+
+    positions_per_week = week.values('week_number').annotate(title_count=Count('title')).order_by('title_count')
 
     context = {
+        'positions_per_week': positions_per_week,
         'top_offers': top_offers,
         'top_skills': top_skills,
         'top_city': top_city,

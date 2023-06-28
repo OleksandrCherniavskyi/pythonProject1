@@ -12,7 +12,7 @@
       labels: [{% for offer in top_offers %} "{{ offer.title }}", {% endfor %}],
       datasets:[
       {
-        label: 'UoP',
+        label: 'UoP gross/month',
         data: [
           [ {% for item in min_avg1 %} {% if item.type == 'permanent' %}  {{ item.avg_level|floatformat:2 }}{% endif %}  {% endfor %}, {% for item in max_avg1 %} {% if item.type == 'permanent' %}  {{ item.avg_level|floatformat:2 }}{% endif %}  {% endfor %}],
           [ {% for item in min_avg2 %} {% if item.type == 'permanent' %}  {{ item.avg_level|floatformat:2 }}{% endif %}  {% endfor %}, {% for item in max_avg2 %} {% if item.type == 'permanent' %}  {{ item.avg_level|floatformat:2 }}{% endif %}  {% endfor %}],
@@ -28,7 +28,7 @@
 
       },
       {
-        label: 'B2B',
+        label: 'B2B net/month',
         data: [
           [ {% for item in min_avg1 %} {% if item.type == 'b2b' %}  {{ item.avg_level|floatformat:2 }}{% endif %}  {% endfor %}, {% for item in max_avg1 %} {% if item.type == 'b2b' %}  {{ item.avg_level|floatformat:2 }}{% endif %}  {% endfor %}],
           [ {% for item in min_avg2 %} {% if item.type == 'b2b' %}  {{ item.avg_level|floatformat:2 }}{% endif %}  {% endfor %}, {% for item in max_avg2 %} {% if item.type == 'b2b' %}  {{ item.avg_level|floatformat:2 }}{% endif %}  {% endfor %}],
@@ -51,7 +51,7 @@
           position: 'top'
         },
         title: {
-          display: true,
+          display: false,
           text: 'with VAT'
         }
       },
