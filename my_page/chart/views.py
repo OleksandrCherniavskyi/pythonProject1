@@ -311,7 +311,22 @@ def week(request):
         .annotate(week_number=ExtractWeek('published_at')).order_by() \
         .annotate(title_count=Count('title'))
 
-    positions_per_week = week.values('week_number').annotate(title_count=Count('title')).order_by('title_count')
+    day_counts = {'Mon': [0, 0], 'Tue': [0, 0], 'Wed': [0, 0], 'Thu': [0, 0], 'Fri': [0, 0], 'Sat': [0, 0],
+                  'Sun': [0, 0]}
+    for item in week:
+        day = item['published_at'].strftime("%a")  # Get the day of the week (e.g., 'Mon', 'Tue', etc.)
+        count = item['title_count']
+        day_counts[day][0] += count
+        day_counts[day][1] += 1
+
+    averages = {}
+    for day, count_data in day_counts.items():
+        total_count = count_data[0]
+        occurrence = count_data[1]
+        average = total_count / occurrence if occurrence > 0 else 0
+        averages[day] = average
+
+    positions_per_week = week.values('week_number').annotate(title_count=Count('title'))
 
     context = {
         'positions_per_week': positions_per_week,
@@ -370,7 +385,9 @@ def week(request):
         'min_avg6': min_avg6,
         'max_avg6': max_avg6,
         'min_avg7': min_avg7,
-        'max_avg7': max_avg7
+        'max_avg7': max_avg7,
+        'week': week,
+        'averages': averages
     }
     return render(request, 'chart/week.html', context)
 

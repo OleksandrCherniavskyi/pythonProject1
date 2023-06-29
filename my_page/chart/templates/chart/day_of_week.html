@@ -1,0 +1,33 @@
+
+
+{% block content %}
+
+
+<div><canvas id="day_of_week" ></canvas></div>
+
+<script>
+  const ctx_day_of_week = document.getElementById('day_of_week');
+
+  new Chart(ctx_day_of_week, {
+    type: 'bar',
+    data: {
+      labels: [{% for day, average in averages.items %} "{{ day }}", {% endfor %}],
+      datasets: [{
+        label: '',
+        data: [{% for day, average in averages.items %} {{ average }}, {% endfor %}],
+        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+        borderColor: 'rgb(75, 192, 192)',
+
+    }]
+  },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+
+</script>
+{% endblock content %}
