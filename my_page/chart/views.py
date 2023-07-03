@@ -38,7 +38,7 @@ def week(request):
                                .annotate(city_count=Count('city')) \
                                .order_by('-city_count')[:7]
 
-    positions_on_day = Offers.objects.exclude(published_at__lt="2023-06-17") \
+    positions_on_day = Offers.objects.exclude(published_at__lt="2023-06-18") \
         .values('published_at') \
         .annotate(title_count=Count('title')) \
         .order_by('published_at')
@@ -419,7 +419,7 @@ def month(request):
                                .annotate(city_count=Count('city')) \
                                .order_by('-city_count')[:7]
 
-    positions_on_day = Offers.objects.exclude(published_at__lt="2023-06-17") \
+    positions_on_day = Offers.objects.exclude(published_at__lt="2023-06-18") \
                            .values('published_at') \
                            .annotate(title_count=Count('title')) \
                            .order_by('published_at')
@@ -774,7 +774,7 @@ def quartal(request):
                                .annotate(city_count=Count('city')) \
                                .order_by('-city_count')[:7]
 
-    positions_on_day = Offers.objects.exclude(published_at__lt="2023-06-17") \
+    positions_on_day = Offers.objects.exclude(published_at__lt="2023-06-18") \
         .values('published_at') \
         .annotate(title_count=Count('title')) \
         .order_by('published_at')
