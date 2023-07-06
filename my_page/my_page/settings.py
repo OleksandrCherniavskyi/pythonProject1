@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-^w7jg-g2_afyoe^5g@5%%&1gd@sye(3e*i$z%ur^=$@ka=sr%5'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'my_page.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'justjoin.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'justjoin.sqlite3'),
     }
 }
 
