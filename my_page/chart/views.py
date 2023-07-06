@@ -1109,7 +1109,7 @@ def start(request):
 def my_offers(request):
 
     my_offers = Offers.objects.filter(published_at__gte=seven_days_ago,
-                      experience_level='junior', marker_icon__in=['data', 'python']) \
+                      experience_level__in=['junior', 'mid'], marker_icon__in=['data', 'python']) \
 
     context = {
         'my_offers': my_offers

@@ -9,6 +9,8 @@
                         <th>Company name</th>
                         <th>City</th>
                         <th>Work type</th>
+                        <th>Date</th>
+                        <th>Level</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -18,6 +20,8 @@
                             <td>{{ offer.company_name }}</td>
                             <td>{{ offer.city }}</td>
                             <td>{{ offer.workplace_type }}</td>
+                            <td>{{ offer.published_at }}</td>
+                            <td>{{ offer.experience_level }}</td>
                         </tr>
                     {% endfor %}
                 </tbody>
