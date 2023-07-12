@@ -1,7 +1,38 @@
 # pythonProject1
+This project is a Django-based web application that analyzes and presents information about the IT sector in the Polish region using a database. The data is obtained from the [JustJoin.It API](https://justjoin.it/) and is updated daily through continuous integration and deployment (CI/CD) using GitHub Actions.
 
-## 
+## Features
+The start page allows users to select a specific time period for viewing analytics.
+Main charts provide insights such as:
+- Top positions in the IT sector.
+- Top specializations in the field.
+- Number of positions available on a daily and weekly basis.
+- Skill ratings for each position and specialization.
 
-To begin, the project will integrate with an API to retrieve the necessary data. This data will then undergo transformation and manipulation to make it suitable for storage and analysis. The transformed data will be loaded into a database, ensuring that the information is organized and easily accessible for querying and analysis purposes.
-The results of these queries will be utilized to gain valuable insights and support decision-making processes.
-To visualize and present the analyzed data, the project will employ Django, a powerful web framework. Using Django, a web page will be created to display the analytical insights in a user-friendly manner. The page will provide interactive visualizations, charts, and graphs to effectively communicate the findings derived from the collected and analyzed data.
+
+## Getting Started
+To run the project using the Docker file, follow these steps:
+
+Clone the repository:
+
+Copy code
+```bash
+git clone https://github.com/OleksandrCherniavskyi/pythonProject1.git
+```
+Build the Docker image:
+
+Copy code
+```docker
+docker build -t image_name .
+```
+
+Run the Docker container:
+
+Copy code
+```docker
+docker run -p 8080:8080 image_name
+```
+The application will be accessible at http://localhost:8080.
+
+
+
