@@ -14,3 +14,6 @@ COPY . .
 
 # Specify the command to run your Django app
 CMD ["python", "my_page/manage.py", "runserver", "0.0.0.0:8080"]
+
+
+
