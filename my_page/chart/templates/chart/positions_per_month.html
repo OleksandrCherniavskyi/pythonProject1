@@ -1,0 +1,32 @@
+
+{% block content %}
+
+
+<div><canvas id="positions_per_month" ></canvas></div>
+
+<script>
+  const ctx_positions_per_month = document.getElementById('positions_per_month');
+
+  new Chart(ctx_positions_per_month, {
+    type: 'bar',
+    data: {
+      labels: [{% for month in positions_per_month %} "{{ month.month_number}}", {% endfor %}],
+      datasets: [{
+        label: '',
+        data: [{% for month in positions_per_month %} {{ month.title_count }}, {% endfor %}],
+        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+        borderColor: 'rgb(75, 192, 192)',
+
+    }]
+  },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+
+</script>
+{% endblock content %}

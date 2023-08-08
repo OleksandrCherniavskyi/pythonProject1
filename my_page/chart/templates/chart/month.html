@@ -119,6 +119,17 @@
 
     <div class="container">
       <div class="header" onclick="toggleContent(this)">
+        Top skills for all possitions
+        <span class="expand-icon">+</span>
+      </div>
+      <div class="content">
+      {% include 'chart/top_skills.html' %}
+      </div>
+    </div>
+
+
+    <div class="container">
+      <div class="header" onclick="toggleContent(this)">
         Skills for <u>{{ specialisation1 }}</u>
         <span class="expand-icon">+</span>
       </div>
@@ -165,7 +176,6 @@
       {% include 'chart/specialisation/specialisation5.html' %}
       </div>
     </div>
-
 
     <div class="container">
       <div class="header" onclick="toggleContent(this)">
@@ -281,46 +291,60 @@
   </div>
 </div>
 
-
 <div class="megacontainer">
-  <div class="header" onclick="toggleContent(this)">
-    Popular skills and rate
+  <div class="megaheader" onclick="toggleContent(this)">
+    Statistics
     <span class="expand-icon">+</span>
   </div>
-  <div class="content">
-    {% include 'chart/top_skills.html' %}
+  <div Class="content">
+    <div class="spacer"></div>
+
+
+
+        <div class="container">
+      <div class="header" onclick="toggleContent(this)">
+          Positions per week
+          <span class="expand-icon">+</span>
+      </div>
+      <div class="content">
+        {% include 'chart/positions_per_week.html' %}
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="header" onclick="toggleContent(this)">
+          Positions per week/experience
+          <span class="expand-icon">+</span>
+      </div>
+      <div class="content">
+        {% include 'chart/positions_per_week_e.html' %}
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="header" onclick="toggleContent(this)">
+          Positions for experience level
+          <span class="expand-icon">+</span>
+      </div>
+      <div class="content">
+        {% include 'chart/positions_for_experience.html' %}
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="header" onclick="toggleContent(this)">
+          Dependency worktype  level to experience
+          <span class="expand-icon">+</span>
+      </div>
+      <div class="content">
+        {% include 'chart/experience_to_work_type.html' %}
+      </div>
+    </div>
+
+
   </div>
 </div>
 
 
-<div class="megacontainer">
-  <div class="header" onclick="toggleContent(this)">
-    Positions on day
-    <span class="expand-icon">+</span>
-  </div>
-  <div class="content">
-    {% include 'chart/positions_on_day.html' %}
-  </div>
-</div>
-
-<div class="megacontainer">
-  <div class="header" onclick="toggleContent(this)">
-    Positions for experience level
-    <span class="expand-icon">+</span>
-  </div>
-  <div class="content">
-    {% include 'chart/positions_for_experience.html' %}
-  </div>
-</div>
-
-<div class="megacontainer">
-  <div class="header" onclick="toggleContent(this)">
-    Dependency worktype  level to experience
-    <span class="expand-icon">+</span>
-  </div>
-  <div class="content">
-    {% include 'chart/experience_to_work_type.html' %}
-  </div>
-</div>
 
 {% endblock %}

@@ -3,14 +3,15 @@
 <link rel="stylesheet" href="{% static 'css/start.css' %}">
 
 <div class="button-container">
-    <a class="term" href="http://127.0.0.1:8000/week">Week</a>
-    <a class="term" href="http://127.0.0.1:8000/month">Month</a>
-    <a class="term" href="http://127.0.0.1:8000/quartal">Quartal</a>
+    <h3>Chose period</h3>
+    <a class="term" href="{% url 'week' %}">Week</a>
+    <a class="term" href="{% url 'month' %}">Month</a>
+    <a class="term" href="{% url 'quartal' %}">Quartal</a>
 </div>
 <div class="button-container">
-    or<br>
-    http://localhost:8080/ + week
-
+    <h6>This project is not a job portal.<br>
+        Here you can find analytics material for the IT sector.<br>
+All data that is used in this project collects from justjoin.it.</h6>
 </div>
 
 

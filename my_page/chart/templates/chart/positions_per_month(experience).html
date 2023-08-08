@@ -1,0 +1,47 @@
+
+{% block content %}
+
+
+<div><canvas id="positions_per_month_e" ></canvas></div>
+
+<script>
+  const ctx_positions_per_month_e = document.getElementById('positions_per_month_e');
+
+  new Chart(ctx_positions_per_month_e, {
+    type: 'line',
+    data: {
+      labels: [{% for month in positions_per_month %} "{{ month.month_number}}", {% endfor %}],
+      datasets: [{
+        label: 'junior',
+        data: [{% for junior in junior_positions_month %} {{ junior.title_count }}, {% endfor %}],
+        backgroundColor: ['#FF6384'],
+        borderColor: 'rgb(75, 192, 192)',
+
+    },
+    {
+        label: 'mid',
+        data: [{% for mid in mid_positions_month %} {{ mid.title_count }}, {% endfor %}],
+        backgroundColor: [ '#36A2EB'],
+        borderColor: 'rgb(75, 192, 192)',
+
+    },
+    {
+        label: 'senior',
+        data: [{% for senior in senior_positions_month %} {{ senior.title_count }}, {% endfor %}],
+        backgroundColor: [ '#FFCE56'],
+        borderColor: 'rgb(75, 192, 192)',
+
+    },
+    ]
+  },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+
+</script>
+{% endblock content %}

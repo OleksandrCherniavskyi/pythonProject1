@@ -1,4 +1,4 @@
-from django.db.models.functions import ExtractWeek
+from django.db.models.functions import ExtractWeek, ExtractMonth
 
 from .models import Offers, Skills, BrandsOffice, EmploymentTypes
 from django.shortcuts import render
@@ -306,7 +306,7 @@ def week(request):
     max_avg7 = EmploymentTypes.objects.filter(id__in=id_top_offer7, currency='pln') \
         .values('type').annotate(type_count=Count('type'), avg_level=Avg('to_salary')).order_by('-type_count')
 
-    week = Offers.objects.exclude(published_at__lt="2023-06-17") \
+    week = Offers.objects.exclude(published_at__lt="2023-06-19") \
         .values('published_at') \
         .annotate(week_number=ExtractWeek('published_at')).order_by() \
         .annotate(title_count=Count('title'))
@@ -327,6 +327,7 @@ def week(request):
         averages[day] = average
 
     positions_per_week = week.values('week_number').annotate(title_count=Count('title'))
+
 
     context = {
         'positions_per_week': positions_per_week,
@@ -687,7 +688,39 @@ def month(request):
     max_avg7 = EmploymentTypes.objects.filter(id__in=id_top_offer7, currency='pln') \
         .values('type').annotate(type_count=Count('type'), avg_level=Avg('to_salary')).order_by('-type_count')
 
+    week = Offers.objects.exclude(published_at__lt="2023-06-19") \
+        .values('published_at') \
+        .annotate(week_number=ExtractWeek('published_at')).order_by() \
+        .annotate(title_count=Count('title'))
+
+    day_counts = {'Mon': [0, 0], 'Tue': [0, 0], 'Wed': [0, 0], 'Thu': [0, 0], 'Fri': [0, 0], 'Sat': [0, 0],
+                  'Sun': [0, 0]}
+    for item in week:
+        day = item['published_at'].strftime("%a")  # Get the day of the week (e.g., 'Mon', 'Tue', etc.)
+        count = item['title_count']
+        day_counts[day][0] += count
+        day_counts[day][1] += 1
+
+    averages = {}
+    for day, count_data in day_counts.items():
+        total_count = count_data[0]
+        occurrence = count_data[1]
+        average = total_count / occurrence if occurrence > 0 else 0
+        averages[day] = average
+
+    positions_per_week = week.values('week_number').annotate(title_count=Count('title'))
+
+    junior_positions_week = positions_per_week.filter(experience_level='junior')
+
+    mid_positions_week = positions_per_week.filter(experience_level='mid')
+
+    senior_positions_week = positions_per_week.filter(experience_level='senior')
+
     context = {
+        'junior_positions_week': junior_positions_week,
+        'mid_positions_week': mid_positions_week,
+        'senior_positions_week': senior_positions_week,
+        'positions_per_week': positions_per_week,
         'top_offers': top_offers,
         'top_skills': top_skills,
         'top_city': top_city,
@@ -743,7 +776,9 @@ def month(request):
         'min_avg6': min_avg6,
         'max_avg6': max_avg6,
         'min_avg7': min_avg7,
-        'max_avg7': max_avg7
+        'max_avg7': max_avg7,
+        'week': week,
+        'averages': averages
     }
     return render(request, 'chart/month.html', context)
 
@@ -973,6 +1008,7 @@ def quartal(request):
     specialisation7 = specialisation7[0]['marker_icon']
 
     experience_level = Offers.objects.values('experience_level').annotate(count=Count('experience_level'))
+
     work_type_office = Offers.objects.filter(published_at__gte=quartal_ago, workplace_type='office') \
         .values('experience_level') \
         .annotate(count_workplace_type=Count('workplace_type'))
@@ -1042,7 +1078,27 @@ def quartal(request):
     max_avg7 = EmploymentTypes.objects.filter(id__in=id_top_offer7, currency='pln') \
         .values('type').annotate(type_count=Count('type'), avg_level=Avg('to_salary')).order_by('-type_count')
 
+    month = Offers.objects.exclude(published_at__lt="2023-07-01") \
+        .values('published_at') \
+        .annotate(month_number=ExtractMonth('published_at')).order_by() \
+        .annotate(title_count=Count('title'))
+
+    positions_per_month = month.values('month_number').annotate(title_count=Count('title'))
+
+    junior_positions_month = positions_per_month.filter(experience_level='junior')
+
+
+    mid_positions_month = positions_per_month.filter(experience_level='mid')
+
+
+    senior_positions_month =  positions_per_month.filter(experience_level='senior')
+
     context = {
+        'junior_positions_month': junior_positions_month,
+        'mid_positions_month': mid_positions_month,
+        'senior_positions_month': senior_positions_month,
+        'month': month,
+        'positions_per_month': positions_per_month,
         'top_offers': top_offers,
         'top_skills': top_skills,
         'top_city': top_city,

@@ -1,0 +1,47 @@
+
+{% block content %}
+
+
+<div><canvas id="positions_per_week_e" ></canvas></div>
+
+<script>
+  const ctx_positions_per_week_e = document.getElementById('positions_per_week_e');
+
+  new Chart(ctx_positions_per_week_e, {
+    type: 'line',
+    data: {
+      labels: [{% for week in positions_per_week %} "{{ week.month_number}}", {% endfor %}],
+      datasets: [{
+        label: 'junior',
+        data: [{% for junior in junior_positions_week %} {{ junior.title_count }}, {% endfor %}],
+        backgroundColor: ['#FF6384'],
+        borderColor: 'rgb(75)',
+
+    },
+    {
+        label: 'mid',
+        data: [{% for mid in mid_positions_week %} {{ mid.title_count }}, {% endfor %}],
+        backgroundColor: [ '#36A2EB'],
+        borderColor: 'rgb(192,)',
+
+    },
+    {
+        label: 'senior',
+        data: [{% for senior in senior_positions_week %} {{ senior.title_count }}, {% endfor %}],
+        backgroundColor: [ '#FFCE56'],
+        borderColor: 'rgb(192)',
+
+    },
+    ]
+  },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+
+</script>
+{% endblock content %}
