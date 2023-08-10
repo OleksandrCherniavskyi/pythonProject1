@@ -1,4 +1,4 @@
-# pythonProject1
+# [pythonProject1](https://yt6n8m-8080.csb.app/)
 This project is a Django-based web application that analyzes and presents information about the IT sector in the Polish region using a database. The data is obtained from the [JustJoin.It API](https://justjoin.it/) and is updated daily through continuous integration and deployment (CI/CD) using GitHub Actions.
 
 ## Features
@@ -9,6 +9,7 @@ Main charts provide insights such as:
 - Number of positions available on a daily and weekly basis.
 - Skill ratings for each position and specialization.
 
+Link to page https://yt6n8m-8080.csb.app/
 
 ## Getting Started
 To run the project using the Docker file, follow these steps:
