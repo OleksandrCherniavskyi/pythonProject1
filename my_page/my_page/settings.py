@@ -77,9 +77,8 @@ WSGI_APPLICATION = 'my_page.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        #'NAME': os.path.join(BASE_DIR, 'justjoin.sqlite3'),
-        'NAME': 'justjoin.sqlite3',
-        'HOST': 'https://github.com/OleksandrCherniavskyi/pythonProject1/blob/master/my_page/justjoin.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'justjoin.sqlite3'),
+
     }
 }
 
