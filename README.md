@@ -9,7 +9,7 @@ Main charts provide insights such as:
 - Number of positions available on a daily and weekly basis.
 - Skill ratings for each position and specialization.
 
-Link to page https://yt6n8m-8080.csb.app/
+Link to page https://8zmkd6-8081.csb.app
 
 ## Getting Started
 To run the project using the Docker file, follow these steps:
