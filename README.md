@@ -1,4 +1,4 @@
-# [pythonProject1](https://yt6n8m-8080.csb.app/)
+# [pythonProject1](https://t7q6wq-8080.csb.app/)
 This project is a Django-based web application that analyzes and presents information about the IT sector in the Polish region using a database. The data is obtained from the [JustJoin.It API](https://justjoin.it/) and is updated daily through continuous integration and deployment (CI/CD) using GitHub Actions.
 
 ## Features
