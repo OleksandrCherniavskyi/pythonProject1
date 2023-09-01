@@ -3,7 +3,10 @@ import requests
 from sqlalchemy import create_engine
 import sqlite3
 import datetime
+import psycopg2
 
+
+engine = create_engine('postgresql://postgres:justjoin123@justjoin-1.cdg5aro86v8p.eu-north-1.rds.amazonaws.com:5432/just_init')
 
 def check_if_valid_data(df: pd.DataFrame) -> bool:
     # Check if dataframe is empty
@@ -256,101 +259,166 @@ def run_justjoin_etl():
     # Validate
     if check_if_valid_data(offers()):
         print("Data valid, proceed to Load stage Offers")
-    # Load
-    engine = create_engine('sqlite:///my_page/justjoin.sqlite3', echo=True)
-    conn = sqlite3.connect('my_page/justjoin.sqlite3')
-    cursor = conn.cursor()
+    ## Load
+    #engine = create_engine('sqlite:///my_page/justjoin.sqlite3', echo=True)
+    #conn = sqlite3.connect('my_page/justjoin.sqlite3')
+    #cursor = conn.cursor()
 
+    # Connect to PostgreSQL
+    conn = psycopg2.connect(
+        dbname='just_init',
+        user='postgres',
+        password='justjoin123',
+        host='justjoin-1.cdg5aro86v8p.eu-north-1.rds.amazonaws.com',
+        port='5432'
+    )
+    conn.autocommit = True
+    # Create a cursor
+    cursor = conn.cursor()
+    brands_table_query = """
+    CREATE TABLE IF NOT EXISTS brands (
+        company_name VARCHAR(250) PRIMARY KEY,
+        company_size INTEGER,
+        company_url VARCHAR(500)
+    );
+    """
     offers_table_query = """
-    CREATE TABLE IF NOT EXISTS offers(
+    CREATE TABLE IF NOT EXISTS offers (
         id VARCHAR(300) PRIMARY KEY,
         published_at DATE,
-        title VARCHAR(100) ,
+        title VARCHAR(100),
         marker_icon VARCHAR(30),
         experience_level VARCHAR(30),
         city VARCHAR(100),
         country_code VARCHAR(10),
         remote VARCHAR(50),
         workplace_type VARCHAR(50),
-        company_name VARCHAR(250)
+        company_name VARCHAR(250),
+        FOREIGN KEY (company_name) REFERENCES brands(company_name)
     );
-"""
-
-    brands_table_query = """
-    CREATE TABLE IF NOT EXISTS brands(
-        company_name VARCHAR(250) PRIMARY KEY,
-        company_size INT,
-        company_url VARCHAR(500)
-    );
-"""
+    """
 
     brands_office_table_query = """
-        CREATE TABLE IF NOT EXISTS brands_office(
-            slug VARCHAR(300) PRIMARY KEY,
-            company_name VARCHAR(250),
-            office VARCHAR(100),
-            id VARCHAR(300)
+    CREATE TABLE IF NOT EXISTS brands_office (
+        slug VARCHAR(300) PRIMARY KEY,
+        company_name VARCHAR(250),
+        office VARCHAR(100),
+        id VARCHAR(300),
+        FOREIGN KEY (id) REFERENCES offers(id),
+        FOREIGN KEY (company_name) REFERENCES brands(company_name)
     );
-"""
-
+    """
     skills_table_query = """
-        CREATE TABLE IF NOT EXISTS skills(
-            id VARCHAR(300),
-            name VARCHAR(50),
-            level INT,
-            FOREIGN KEY (id) REFERENCES offers(id)
+    CREATE TABLE IF NOT EXISTS skills (
+        id VARCHAR(300),
+        name VARCHAR(150),
+        level INT,
+        FOREIGN KEY (id) REFERENCES offers(id)
     );
-"""
-
+    """
     employment_types_query = """
-        CREATE TABLE IF NOT EXISTS employment_types(
-            id VARCHAR(300),
-            type VARCHAR(100),
-            from_salary INT,
-            to_salary INT,
-            currency VARCHAR(10),
-            FOREIGN KEY (id) REFERENCES offers(id)
+    CREATE TABLE IF NOT EXISTS employment_types (
+        id VARCHAR(300),
+        type VARCHAR(100),
+        from_salary INT,
+        to_salary INT,
+        currency VARCHAR(10),
+        FOREIGN KEY (id) REFERENCES offers(id)
     );
-"""
-
-    # Verificate primary key
-    exiting_offers_query = "SELECT * FROM offers"
-    exiting_brands_query = "SELECT * FROM brands"
-    exiting_office_query = "SELECT * FROM brands_office"
+    """
+    exiting_offers_query = "SELECT * FROM offers;"
+    exiting_brands_query = "SELECT * FROM brands;"
+    exiting_office_query = "SELECT * FROM brands_office;"
+#    offers_table_query = """
+#    CREATE TABLE IF NOT EXISTS offers(
+#        id VARCHAR(300) PRIMARY KEY,
+#        published_at DATE,
+#        title VARCHAR(100) ,
+#        marker_icon VARCHAR(30),
+#        experience_level VARCHAR(30),
+#        city VARCHAR(100),
+#        country_code VARCHAR(10),
+#        remote VARCHAR(50),
+#        workplace_type VARCHAR(50),
+#        company_name VARCHAR(250)
+#    );
+#    """
+#
+#    brands_table_query = """
+#    CREATE TABLE IF NOT EXISTS brands(
+#        company_name VARCHAR(250) PRIMARY KEY,
+#        company_size INT,
+#        company_url VARCHAR(500)
+#    );
+#    """
+#
+#    brands_office_table_query = """
+#        CREATE TABLE IF NOT EXISTS brands_office(
+#            slug VARCHAR(300) PRIMARY KEY,
+#            company_name VARCHAR(250),
+#            office VARCHAR(100),
+#            id VARCHAR(300)
+#    );
+#    """
+#
+#    skills_table_query = """
+#        CREATE TABLE IF NOT EXISTS skills(
+#            id VARCHAR(300),
+#            name VARCHAR(50),
+#            level INT,
+#            FOREIGN KEY (id) REFERENCES offers(id)
+#    );
+#    """
+#
+#    employment_types_query = """
+#        CREATE TABLE IF NOT EXISTS employment_types(
+#            id VARCHAR(300),
+#            type VARCHAR(100),
+#            from_salary INT,
+#            to_salary INT,
+#            currency VARCHAR(10),
+#            FOREIGN KEY (id) REFERENCES offers(id)
+#    );
+#    """
+#
+#    # Verificate primary key
+#    exiting_offers_query = "SELECT * FROM offers"
+#    exiting_brands_query = "SELECT * FROM brands"
+#    exiting_office_query = "SELECT * FROM brands_office"
 
 
 
 
     cursor.execute(offers_table_query)
     try:
-        exiting_offers = pd.read_sql_query(exiting_offers_query, conn)
+        exiting_offers = pd.read_sql_query(exiting_offers_query, engine)
         new_offers = offers()[~offers()['id'].isin(exiting_offers['id'])]
-        new_offers.to_sql("offers", engine, if_exists='append', index=False)
+        new_offers.to_sql("offers", engine, if_exists='append', index=False) #engine,
     except:
         print("Data already exists in the table offers")
     cursor.execute(brands_table_query)
 
     try:
-        exiting_brands = pd.read_sql_query(exiting_brands_query, conn)
+        exiting_brands = pd.read_sql_query(exiting_brands_query, engine)
         new_brands = brands()[~brands()['company_name'].isin(exiting_brands['company_name'])]
-        new_brands.to_sql("brands", engine, index=False, if_exists='append')
+        new_brands.to_sql("brands", engine, index=False, if_exists='append') #engine,
     except:
         print("Data already exists in the table brands")
     cursor.execute(brands_office_table_query)
     try:
-        exiting_office = pd.read_sql_query(exiting_office_query, conn)
+        exiting_office = pd.read_sql_query(exiting_office_query, engine)
         new_office = location()[~location()['slug'].isin(exiting_office['slug'])]
-        new_office.to_sql("brands_office", engine, index=False, if_exists='append')
+        new_office.to_sql("brands_office", engine, index=False, if_exists='append') #engine,
     except:
         print("Data already exists in the table brands_office")
     cursor.execute(skills_table_query)
     try:
-        skills().to_sql("skills", engine, index=False, if_exists='append')
+        skills().to_sql("skills", engine, index=False, if_exists='append') #engine,
     except:
         print("Data already exists in the table skills")
     cursor.execute(employment_types_query)
     try:
-        employment().to_sql('employment_types', engine, index=False, if_exists='append')
+        employment().to_sql('employment_types', engine, index=False, if_exists='append') # engine,
     except:
         print("Data already exists in the table employment_types")
 
