@@ -273,7 +273,7 @@
 
 <div class="megacontainer">
   <div class="megaheader" onclick="toggleContent(this)">
-    Sallary
+    Sallary and contracts
     <span class="expand-icon">+</span>
   </div>
   <div Class="content">
@@ -285,6 +285,16 @@
       </div>
       <div class="content">
         {% include 'chart/sallary.html' %}
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="header" onclick="toggleContent(this)">
+        Employment contracts
+        <span class="expand-icon">+</span>
+      </div>
+      <div class="content">
+        {% include 'chart/j_employment_type_counts.html' %}
       </div>
     </div>
 

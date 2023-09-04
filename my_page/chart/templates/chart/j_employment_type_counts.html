@@ -1,0 +1,58 @@
+
+{% block content %}
+    <div id="tableContainer">
+        <div id="tableWrapper">
+            <table id="employment_type_counts">
+    <thead>
+        <tr>
+            <th>Employment contracts</th>
+            <th>Junior</th>
+            <th>Mid</th>
+            <th>Senior</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                {% for e_type in j_employment_type_counts %}
+                    {{ e_type.type }}<br>
+                {% endfor %}
+            </td>
+            <td>
+                {% for e_count in j_employment_type_counts %}
+                    {{ e_count.count_type }}<br>
+                {% endfor %}
+            </td>
+            <td>
+                {% for e_count in m_employment_type_counts %}
+                    {{ e_count.count_type }}<br>
+                {% endfor %}
+            </td>
+            <td>
+                {% for e_count in s_employment_type_counts %}
+                    {{ e_count.count_type }}<br>
+                {% endfor %}
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+        </div>
+    </div>
+
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#employment_type_counts').DataTable({
+                searching: false,
+                paging: false,
+                info: true,
+                order: [[6, 'desc']]
+            });
+        });
+    </script>
+{% endblock content %}

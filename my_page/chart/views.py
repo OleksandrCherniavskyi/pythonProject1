@@ -1,6 +1,6 @@
 from django.db.models.functions import ExtractWeek, ExtractMonth
 
-from .models import Offers, Skills, BrandsOffice, EmploymentTypes
+from .models import Offers, Skills, BrandsOffice, EmploymentTypes, Brands
 from django.shortcuts import render
 from django.db.models import Count, Avg
 from django.utils.timezone import now
@@ -21,6 +21,14 @@ def week(request):
 
     offers = Offers.objects.filter(published_at__gte=seven_days_ago) \
                      .values('id')
+    junior_offers = Offers.objects.filter(published_at__gte=seven_days_ago, experience_level='junior') \
+        .values('id')
+
+    mid_offers = Offers.objects.filter(published_at__gte=seven_days_ago, experience_level='mid') \
+        .values('id')
+
+    senior_offers = Offers.objects.filter(published_at__gte=seven_days_ago, experience_level='senior') \
+        .values('id')
 
 
     top_skills = Skills.objects.filter(id__in=offers).values('name') \
@@ -343,8 +351,26 @@ def week(request):
         .annotate(count_offers=Count('company_name')) \
         .order_by('-count_offers')[:7]
 
+    j_employment_type_counts = EmploymentTypes.objects.filter( id__in=junior_offers ) \
+        .values('type') \
+        .annotate(count_type=Count('type')) \
+        .order_by('type')
+
+    m_employment_type_counts = EmploymentTypes.objects.filter(id__in=mid_offers) \
+        .values('type') \
+        .annotate(count_type=Count('type')) \
+        .order_by('type')
+
+    s_employment_type_counts = EmploymentTypes.objects.filter( id__in=senior_offers ) \
+        .values('type') \
+        .annotate(count_type=Count('type')) \
+        .order_by('type')
+
 
     context = {
+        'j_employment_type_counts': j_employment_type_counts,
+        'm_employment_type_counts': m_employment_type_counts,
+        's_employment_type_counts': s_employment_type_counts,
         'j_positions_for_company': j_positions_for_company,
         'm_positions_for_company': m_positions_for_company,
         's_positions_for_company': s_positions_for_company,
@@ -422,6 +448,14 @@ def month(request):
     offers = Offers.objects.filter(published_at__gte=month_ago) \
                      .values('id')
 
+    junior_offers = Offers.objects.filter(published_at__gte=month_ago, experience_level='junior') \
+        .values('id')
+
+    mid_offers = Offers.objects.filter(published_at__gte=month_ago, experience_level='mid') \
+        .values('id')
+
+    senior_offers = Offers.objects.filter(published_at__gte=month_ago, experience_level='senior') \
+        .values('id')
 
     top_skills = Skills.objects.filter(id__in=offers).values('name') \
                      .annotate(skill_count=Count('name'), avg_level=Avg('level')) \
@@ -749,7 +783,25 @@ def month(request):
                                   .annotate(count_offers=Count('company_name')) \
                                   .order_by('-count_offers')[:7]
 
+    j_employment_type_counts = EmploymentTypes.objects.filter(id__in=junior_offers) \
+        .values('type') \
+        .annotate(count_type=Count('type')) \
+        .order_by('type')
+
+    m_employment_type_counts = EmploymentTypes.objects.filter(id__in=mid_offers) \
+        .values('type') \
+        .annotate(count_type=Count('type')) \
+        .order_by('type')
+
+    s_employment_type_counts = EmploymentTypes.objects.filter(id__in=senior_offers) \
+        .values('type') \
+        .annotate(count_type=Count('type')) \
+        .order_by('-type')
+
     context = {
+        'j_employment_type_counts': j_employment_type_counts,
+        'm_employment_type_counts': m_employment_type_counts,
+        's_employment_type_counts': s_employment_type_counts,
         'j_positions_for_company': j_positions_for_company,
         'm_positions_for_company': m_positions_for_company,
         's_positions_for_company': s_positions_for_company,
@@ -829,6 +881,14 @@ def quartal(request):
     offers = Offers.objects.filter(published_at__gte=quartal_ago) \
                      .values('id')
 
+    junior_offers = Offers.objects.filter(published_at__gte=quartal_ago, experience_level='junior') \
+        .values('id')
+
+    mid_offers = Offers.objects.filter(published_at__gte=quartal_ago, experience_level='mid') \
+        .values('id')
+
+    senior_offers = Offers.objects.filter(published_at__gte=quartal_ago, experience_level='senior') \
+        .values('id')
 
     top_skills = Skills.objects.filter(id__in=offers).values('name') \
                      .annotate(skill_count=Count('name'), avg_level=Avg('level')) \
@@ -1144,7 +1204,25 @@ def quartal(request):
                                   .annotate(count_offers=Count('company_name')) \
                                   .order_by('-count_offers')[:7]
 
+    j_employment_type_counts = EmploymentTypes.objects.filter(id__in=junior_offers) \
+        .values('type') \
+        .annotate(count_type=Count('type')) \
+        .order_by('type')
+
+    m_employment_type_counts = EmploymentTypes.objects.filter(id__in=mid_offers) \
+        .values('type') \
+        .annotate(count_type=Count('type')) \
+        .order_by('type')
+
+    s_employment_type_counts = EmploymentTypes.objects.filter(id__in=senior_offers) \
+        .values('type') \
+        .annotate(count_type=Count('type')) \
+        .order_by('type')
+
     context = {
+        'j_employment_type_counts': j_employment_type_counts,
+        'm_employment_type_counts': m_employment_type_counts,
+        's_employment_type_counts': s_employment_type_counts,
         'j_positions_for_company': j_positions_for_company,
         'm_positions_for_company': m_positions_for_company,
         's_positions_for_company': s_positions_for_company,
