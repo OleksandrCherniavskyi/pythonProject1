@@ -328,8 +328,26 @@ def week(request):
 
     positions_per_week = week.values('week_number').annotate(title_count=Count('title'))
 
+    j_positions_for_company = Offers.objects.filter(experience_level='junior', published_at__gte=seven_days_ago) \
+                     .values('company_name') \
+                     .annotate(count_offers=Count('company_name')) \
+                     .order_by('-count_offers')[:7]
+
+    m_positions_for_company = Offers.objects.filter(experience_level='mid', published_at__gte=seven_days_ago) \
+        .values('company_name') \
+        .annotate(count_offers=Count('company_name')) \
+        .order_by('-count_offers')[:7]
+
+    s_positions_for_company = Offers.objects.filter(experience_level='senior', published_at__gte=seven_days_ago) \
+        .values('company_name') \
+        .annotate(count_offers=Count('company_name')) \
+        .order_by('-count_offers')[:7]
+
 
     context = {
+        'j_positions_for_company': j_positions_for_company,
+        'm_positions_for_company': m_positions_for_company,
+        's_positions_for_company': s_positions_for_company,
         'positions_per_week': positions_per_week,
         'top_offers': top_offers,
         'top_skills': top_skills,
@@ -708,7 +726,7 @@ def month(request):
         average = total_count / occurrence if occurrence > 0 else 0
         averages[day] = average
 
-    positions_per_week = week.values('week_number').annotate(title_count=Count('title'))
+    positions_per_week = week.values('week_number').annotate(title_count=Count('title')).order_by('week_number')
 
     junior_positions_week = positions_per_week.filter(experience_level='junior')
 
@@ -716,7 +734,25 @@ def month(request):
 
     senior_positions_week = positions_per_week.filter(experience_level='senior')
 
+    j_positions_for_company = Offers.objects.filter(experience_level='junior', published_at__gte=month_ago) \
+                                  .values('company_name') \
+                                  .annotate(count_offers=Count('company_name')) \
+                                  .order_by('-count_offers')[:7]
+
+    m_positions_for_company = Offers.objects.filter(experience_level='mid', published_at__gte=month_ago) \
+                                  .values('company_name') \
+                                  .annotate(count_offers=Count('company_name')) \
+                                  .order_by('-count_offers')[:7]
+
+    s_positions_for_company = Offers.objects.filter(experience_level='senior', published_at__gte=month_ago) \
+                                  .values('company_name') \
+                                  .annotate(count_offers=Count('company_name')) \
+                                  .order_by('-count_offers')[:7]
+
     context = {
+        'j_positions_for_company': j_positions_for_company,
+        'm_positions_for_company': m_positions_for_company,
+        's_positions_for_company': s_positions_for_company,
         'junior_positions_week': junior_positions_week,
         'mid_positions_week': mid_positions_week,
         'senior_positions_week': senior_positions_week,
@@ -1083,7 +1119,7 @@ def quartal(request):
         .annotate(month_number=ExtractMonth('published_at')).order_by() \
         .annotate(title_count=Count('title'))
 
-    positions_per_month = month.values('month_number').annotate(title_count=Count('title'))
+    positions_per_month = month.values('month_number').annotate(title_count=Count('title')).order_by('month_number')
 
     junior_positions_month = positions_per_month.filter(experience_level='junior')
 
@@ -1093,7 +1129,25 @@ def quartal(request):
 
     senior_positions_month =  positions_per_month.filter(experience_level='senior')
 
+    j_positions_for_company = Offers.objects.filter(experience_level='junior', published_at__gte=quartal_ago) \
+                                  .values('company_name') \
+                                  .annotate(count_offers=Count('company_name')) \
+                                  .order_by('-count_offers')[:7]
+
+    m_positions_for_company = Offers.objects.filter(experience_level='mid', published_at__gte=quartal_ago) \
+                                  .values('company_name') \
+                                  .annotate(count_offers=Count('company_name')) \
+                                  .order_by('-count_offers')[:7]
+
+    s_positions_for_company = Offers.objects.filter(experience_level='senior', published_at__gte=quartal_ago) \
+                                  .values('company_name') \
+                                  .annotate(count_offers=Count('company_name')) \
+                                  .order_by('-count_offers')[:7]
+
     context = {
+        'j_positions_for_company': j_positions_for_company,
+        'm_positions_for_company': m_positions_for_company,
+        's_positions_for_company': s_positions_for_company,
         'junior_positions_month': junior_positions_month,
         'mid_positions_month': mid_positions_month,
         'senior_positions_month': senior_positions_month,

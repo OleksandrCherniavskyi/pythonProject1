@@ -1,0 +1,43 @@
+
+{% block content %}
+    <div id="tableContainer">
+        <div id="tableWrapper">
+            <table id="s_positions_for_company">
+                <thead>
+                    <tr>
+
+                        <th>Company name</th>
+                        <th>Position in company</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for offer in s_positions_for_company %}
+                        <tr>
+
+                            <td>{{ offer.company_name }}</td>
+                            <td>{{ offer.count_offers }}</td>
+
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#s_positions_for_company').DataTable({
+                searching: false,
+                paging: false,
+                info: true,
+                order: [[6, 'desc']]
+            });
+        });
+    </script>
+{% endblock content %}
