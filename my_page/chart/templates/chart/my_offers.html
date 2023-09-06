@@ -11,6 +11,7 @@
                         <th>Work type</th>
                         <th>Date</th>
                         <th>Level</th>
+                        <th>Link</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -22,6 +23,8 @@
                             <td>{{ offer.workplace_type }}</td>
                             <td>{{ offer.published_at }}</td>
                             <td>{{ offer.experience_level }}</td>
+                            <td><a href="https://justjoin.it/offers/{{ offer.id }}">Link</a></td>
+
                         </tr>
                     {% endfor %}
                 </tbody>
