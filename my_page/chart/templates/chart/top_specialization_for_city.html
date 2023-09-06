@@ -1,0 +1,51 @@
+
+{% block content %}
+    <div id="tableContainer">
+        <div id="tableWrapper">
+            <table id="top_specialization_for_city">
+                <thead>
+                    <tr>
+
+                        <th>City</th>
+                        <th>Specialization</th>
+                        <th>Rate</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+
+                        <tr>
+
+                            <td>{% for item in top_specialization_for_city %}
+                                    {{ item.city}}<br>
+                                {% endfor %}</td>
+                            <td>{% for item in marker %}
+                                    {{ item.marker_icon }}<br>
+                                {% endfor %}</td>
+                            <td>{% for item in top_specialization_for_city %}
+                                    {{ item.count_marker }}<br>
+                                {% endfor %}</td>
+
+                        </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#top_specialization_for_city').DataTable({
+                searching: false,
+                paging: false,
+                info: true,
+                order: [[6, 'desc']]
+            });
+        });
+    </script>
+{% endblock content %}

@@ -46,7 +46,8 @@ def week(request):
                                .annotate(city_count=Count('city')) \
                                .order_by('-city_count')[:7]
 
-    positions_on_day = Offers.objects.exclude(published_at__lt="2023-06-18") \
+    positions_on_day = Offers.objects.filter(published_at__gte=month_ago)\
+        .exclude(published_at__lt="2023-06-18") \
         .values('published_at') \
         .annotate(title_count=Count('title')) \
         .order_by('published_at')
@@ -351,7 +352,7 @@ def week(request):
         .annotate(count_offers=Count('company_name')) \
         .order_by('-count_offers')[:7]
 
-    j_employment_type_counts = EmploymentTypes.objects.filter( id__in=junior_offers ) \
+    j_employment_type_counts = EmploymentTypes.objects.filter(id__in=junior_offers ) \
         .values('type') \
         .annotate(count_type=Count('type')) \
         .order_by('type')
@@ -361,13 +362,21 @@ def week(request):
         .annotate(count_type=Count('type')) \
         .order_by('type')
 
-    s_employment_type_counts = EmploymentTypes.objects.filter( id__in=senior_offers ) \
+    s_employment_type_counts = EmploymentTypes.objects.filter(id__in=senior_offers) \
         .values('type') \
         .annotate(count_type=Count('type')) \
         .order_by('type')
 
+    top_specialization_for_city = Offers.objects.filter(published_at__gte=seven_days_ago)\
+        .values('city') \
+        .annotate(count_marker=Count('marker_icon')).order_by('-count_marker')[:10]
+    marker = Offers.objects.filter(published_at__gte=seven_days_ago)\
+        .values('marker_icon') \
+        .annotate(count_marker=Count('marker_icon')).order_by('-count_marker')[:10]
 
     context = {
+        'marker': marker,
+        'top_specialization_for_city': top_specialization_for_city,
         'j_employment_type_counts': j_employment_type_counts,
         'm_employment_type_counts': m_employment_type_counts,
         's_employment_type_counts': s_employment_type_counts,
@@ -798,7 +807,16 @@ def month(request):
         .annotate(count_type=Count('type')) \
         .order_by('-type')
 
+    top_specialization_for_city = Offers.objects.filter(published_at__gte=month_ago) \
+                                      .values('city') \
+                                      .annotate(count_marker=Count('marker_icon')).order_by('-count_marker')[:10]
+    marker = Offers.objects.filter(published_at__gte=month_ago) \
+                 .values('marker_icon') \
+                 .annotate(count_marker=Count('marker_icon')).order_by('-count_marker')[:10]
+
     context = {
+        'marker': marker,
+        'top_specialization_for_city': top_specialization_for_city,
         'j_employment_type_counts': j_employment_type_counts,
         'm_employment_type_counts': m_employment_type_counts,
         's_employment_type_counts': s_employment_type_counts,
@@ -1219,7 +1237,16 @@ def quartal(request):
         .annotate(count_type=Count('type')) \
         .order_by('type')
 
+    top_specialization_for_city = Offers.objects.filter(published_at__gte=quartal_ago) \
+                                      .values('city') \
+                                      .annotate(count_marker=Count('marker_icon')).order_by('-count_marker')[:10]
+    marker = Offers.objects.filter(published_at__gte=quartal_ago) \
+                 .values('marker_icon') \
+                 .annotate(count_marker=Count('marker_icon')).order_by('-count_marker')[:10]
+
     context = {
+        'marker': marker,
+        'top_specialization_for_city': top_specialization_for_city,
         'j_employment_type_counts': j_employment_type_counts,
         'm_employment_type_counts': m_employment_type_counts,
         's_employment_type_counts': s_employment_type_counts,
