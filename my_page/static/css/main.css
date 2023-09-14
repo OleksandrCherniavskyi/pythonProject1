@@ -2,9 +2,14 @@
   border: 3px solid #222831;
   margin: 0 auto;
   margin-bottom: 10px;
-  max-width: 50%;
-  min-width: 500px;
+  max-width: 700px; /* Default max-width for larger displays */
+
+  /* Media query for smaller screens (e.g., phones) */
+  @media screen and (max-width: 768px) {
+    max-width: 100%; /* Change max-width to 100% for smaller screens */
+  }
 }
+
 
 .container {
   border: 1px solid #222831;

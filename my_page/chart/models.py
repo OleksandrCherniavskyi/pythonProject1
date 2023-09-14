@@ -8,6 +8,13 @@
 from django.db import models
 import datetime
 
+class Page(models.Model):
+    title = models.CharField(max_length=200)
+    content = models.TextField()
+    visits_count = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.title
 
 class AuthGroup(models.Model):
     name = models.CharField(unique=True, max_length=150)
