@@ -1,6 +1,11 @@
 # [pythonProject1](https://t7q6wq-8080.csb.app/)
 This project is a Django-based web application that analyzes and presents information about the IT sector in the Polish region using a database. The data is obtained from the [JustJoin.It API](https://justjoin.it/) and is updated daily through continuous integration and deployment (CI/CD) using GitHub Actions.
 
+## Unfortunately, starting from September 25, 2023, Justjoin has been updated, and access to the API has been closed. 
+- This project does not have a positive value for me, and I will not be finding a new solution
+- I have backed up the old SQLite database and closed the PostgreSQL database.
+
+
 ## Features
 The start page allows users to select a specific time period for viewing analytics.
 Main charts provide insights such as:
