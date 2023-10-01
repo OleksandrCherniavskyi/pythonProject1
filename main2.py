@@ -1,12 +1,8 @@
 import json
-from urllib.error import HTTPError
 from bs4 import BeautifulSoup as bs
 import pandas as pd
 import requests
 from sqlalchemy import create_engine
-import sqlite3
-import datetime
-import psycopg2
 
 
 engine = create_engine('postgresql://tqupkkom:ivFQarmVJxpKnp4LYCCZ5FKvU0kGxmV5@balarama.db.elephantsql.com/tqupkkom')
@@ -18,217 +14,236 @@ connection = engine.raw_connection()
 cursor = connection.cursor()
 
 # QUERY
-create_offers_table = """
-    CREATE TABLE IF NOT EXISTS offers (
-        slug VARCHAR(100) PRIMARY KEY,
-        title VARCHAR(200),
-        workplaceType VARCHAR(10),
-        experienceLevel VARCHAR(10),
-        workingTime VARCHAR(15),
-        categoryId INTEGER,
-        city VARCHAR(50),
-        companyName VARCHAR(150),
-        publishedAt TIMESTAMP
-);
-"""
-cursor.execute(create_offers_table)
-create_skills_table = """
-CREATE TABLE IF NOT EXISTS skills (
-    id SERIAL PRIMARY KEY,
-    slug VARCHAR(100) REFERENCES offers(slug),
-    skill VARCHAR(50)
-);
-"""
-cursor.execute(create_skills_table)
-create_type_table = """
-CREATE TABLE IF NOT EXISTS employmentTypes (
-    id SERIAL PRIMARY KEY,
-    to_ INTEGER,
-    from_ INTEGER,
-    type VARCHAR(10),
-    currency VARCHAR(3),
-    slug VARCHAR(100) REFERENCES offers(slug)
-);
-"""
-cursor.execute(create_type_table)
-create_multilocation_table = """
-CREATE TABLE IF NOT EXISTS multilocation (
-    id SERIAL PRIMARY KEY,
-    city VARCHAR(40),
-    location_slug VARCHAR(255),
-    slug VARCHAR(100) REFERENCES offers(slug)
-);
-"""
-cursor.execute(create_multilocation_table)
-create_offers_life_table = """
-CREATE TABLE IF NOT EXISTS offers_life (
-    slug VARCHAR(100) REFERENCES offers(slug),
-    publishedAt TIMESTAMP
-);
-"""
-cursor.execute(create_offers_life_table)
+
 exiting_offers_query = "SELECT * FROM offers;"
-exiting_brands_query = "SELECT * FROM brands;"
-exiting_office_query = "SELECT * FROM brands_office;"
+exiting_types_query = "SELECT * FROM types;"
+exiting_skills_query = "SELECT * FROM skills;"
+exiting_multilocation_query = "SELECT * FROM multilocation;"
 
-
-
-#url = 'https://justjoin.it/v2/user-panel/offers?'
-#r = requests.get(url)
+url = 'https://justjoin.it/v2/user-panel/offers?'
+r = requests.get(url)
 #print(f'r_status: {r.status_code}')
-#
-#webpage = bs(r.text, 'html.parser')
-#script_tag = webpage.find('script', id='__NEXT_DATA__')
-#
-#
-#script_content = script_tag.contents[0]
-#
-#data = json.loads(script_content)
-#json_filename = 'extracted_data.json'
 
-#
-#
-#queries = data['props']['pageProps']["dehydratedState"]["queries"]#["state"]["data"]["pages"[0]]["data"]
-#pages = queries[0]['state']['data']['pages']
-#data_in_json = pages[0]['data']
-#
-#print(data_in_json)
-#
-## Save the data as JSON in a file
-#with open(json_filename, 'w', encoding='utf-8') as json_file:
-#    json.dump(data_in_json, json_file, ensure_ascii=False, indent=4)
-#
-#print(f'Data saved to {json_filename}')
+webpage = bs(r.text, 'html.parser')
+script_tag = webpage.find('script', id='__NEXT_DATA__')
+script_content = script_tag.contents[0]
+data = json.loads(script_content)
+json_filename = 'extracted_data.json'
+
+queries = data['props']['pageProps']["dehydratedState"]["queries"]
+pages = queries[0]['state']['data']['pages']
+data_in_json = pages[0]['data']
+
+
+
 
 
 # Specify the path to the JSON file
-json_filename = 'extracted_data.json'
+
 # Open the JSON file for reading
-with open(json_filename, 'r', encoding='utf-8') as json_file:
-    data = json.load(json_file)
-
-# Now, the data from the JSON file is stored in the 'data' variable
-# You can access and manipulate the data as needed
-#print(data)
+with open('extracted_data.json', 'r', encoding='utf-8') as json_file:
+    data_in_json = json.load(json_file)
 
 
-slug = []
-title = []
-workplaceType = []
-experienceLevel = []
-workingTime = []
-categoryId = []
-city = []
-companyName = []
-publishedAt = []
-for item in data:
-    # table offers
-    o_slug = item.get("slug")
-    slug.append(o_slug)
-    o_title = item.get("title")
-    o_title = o_title.replace(' - Remote ', '')
-    o_title = o_title.replace('Remote', '')
-    o_title = o_title.replace(' (REMOTE)', '')
-    o_title = o_title.replace(' (Remote)', '')
-    o_title = o_title.replace('Junior ', '')
-    o_title = o_title.replace('Junior/ ', '')
-    o_title = o_title.replace('(Junior) ', '')
-    o_title = o_title.replace(' (Junior)', '')
-    o_title = o_title.replace('Mid ', '')
-    o_title = o_title.replace('Mid-', '')
-    o_title = o_title.replace('Mid /', '')
-    o_title = o_title.replace('Mid / ', '')
-    o_title = o_title.replace('Mid/', '')
-    o_title = o_title.replace('Middle ', '')
-    o_title = o_title.replace('Middle/', '')
-    o_title = o_title.replace('Senior ', '')
-    o_title = o_title.replace('Senior / ', '')
-    o_title = o_title.replace('Senior/ ', '')
-    o_title = o_title.replace('(Senior) ', '')
-    o_title = o_title.replace(' (Senior)', '')
-    o_title = o_title.replace('Expert ', '')
-    o_title = o_title.replace('Lead ', '')
-    o_title = o_title.replace('Lead, ', '')
-    o_title = o_title.replace(' Lead', '')
-    o_title = o_title.replace(' (Automotive)', '')
-    o_title = o_title.replace(' (Azure)', '')
-    o_title = o_title.replace(' (GCP)', '')
-    o_title = o_title.replace(' (m/f/d)', '')
-    o_title = o_title.replace('👉 ', '')
-    o_title = o_title.replace('👉', '')
-    o_title = o_title.replace(' (Mid / Senior)', '')
-    title.append(o_title)
+    for item in data_in_json:
+         #table offers
+        def offers():
+            slug = []
+            title = []
+            workplace_type = []
+            experience_level = []
+            working_time = []
+            category_id = []
+            city = []
+            company_name = []
+            published_at = []
+            o_slug = item.get("slug")
+            slug.append(o_slug)
 
-    o_workplaceType = item.get("workplaceType")
-    workplaceType.append(o_workplaceType)
+            o_title = item.get("title")
+            o_title = o_title.replace(' - Remote ', '')
+            o_title = o_title.replace('Remote', '')
+            o_title = o_title.replace(' (REMOTE)', '')
+            o_title = o_title.replace(' (Remote)', '')
+            o_title = o_title.replace('Junior ', '')
+            o_title = o_title.replace('Junior/ ', '')
+            o_title = o_title.replace('(Junior) ', '')
+            o_title = o_title.replace(' (Junior)', '')
+            o_title = o_title.replace('Mid ', '')
+            o_title = o_title.replace('Mid-', '')
+            o_title = o_title.replace('Mid /', '')
+            o_title = o_title.replace('Mid / ', '')
+            o_title = o_title.replace('Mid/', '')
+            o_title = o_title.replace('Middle ', '')
+            o_title = o_title.replace('Middle/', '')
+            o_title = o_title.replace('Senior ', '')
+            o_title = o_title.replace('Senior / ', '')
+            o_title = o_title.replace('Senior/ ', '')
+            o_title = o_title.replace('(Senior) ', '')
+            o_title = o_title.replace(' (Senior)', '')
+            o_title = o_title.replace('Expert ', '')
+            o_title = o_title.replace('Lead ', '')
+            o_title = o_title.replace('Lead, ', '')
+            o_title = o_title.replace(' Lead', '')
+            o_title = o_title.replace(' (Automotive)', '')
+            o_title = o_title.replace(' (Azure)', '')
+            o_title = o_title.replace(' (GCP)', '')
+            o_title = o_title.replace(' (m/f/d)', '')
+            o_title = o_title.replace('👉 ', '')
+            o_title = o_title.replace('👉', '')
+            o_title = o_title.replace(' (Mid / Senior)', '')
+            title.append(o_title)
 
-    o_experienceLevel = item.get("experienceLevel")
-    experienceLevel.append(o_experienceLevel)
+            o_workplace_type = item.get("workplaceType")
+            workplace_type.append(o_workplace_type)
 
-    o_workingTime = item.get("workingTime")
-    workingTime.append(o_workingTime)
+            o_experience_level = item.get("experienceLevel")
+            experience_level.append(o_experience_level)
 
-    o_categoryId = item.get("categoryId")
-    categoryId.append(o_categoryId)
+            o_working_time = item.get("workingTime")
+            working_time.append(o_working_time)
 
-    o_city = str(item["city"])
-    city.append(item["city"])
+            o_category_id = item.get("categoryId")
+            category_id.append(o_category_id)
 
-    o_companyName = item.get("companyName")
-    companyName.append(companyName)
+            o_city = str(item["city"])
+            city.append(item["city"])
 
-    o_publishedAt = item["publishedAt"][:10]
-    publishedAt.append(publishedAt)
+            o_company_name = item["companyName"]
+            company_name.append(o_company_name)
 
-    offers_dict = {
-        'slug': slug,
-        'title': title,
-        'workplaceType': workplaceType,
-        'experienceLevel': experienceLevel,
-        'workingTime': workingTime,
-        'categoryId': categoryId,
-        'city': city,
-        'companyName': companyName,
-        'publishedAt': publishedAt
-    }
+            o_published_at = item["publishedAt"][:10]
+            published_at.append(o_published_at)
 
-    offers_df = pd.DataFrame(offers_dict, columns=['slug', 'title', 'workplaceType', 'experienceLevel', 'workingTime',
-                                                    'categoryId', 'city', 'companyName', 'publishedAt'])
+            offers_dict = {
+                'slug': slug,
+                'title': title,
+                'workplace_type': workplace_type,
+                'experience_level': experience_level,
+                'working_time': working_time,
+                'category_id': category_id,
+                'city': city,
+                'company_name': company_name,
+                'published_at': published_at
+            }
 
-
-    try:
-        exiting_offers = pd.read_sql_query(exiting_offers_query, engine)
-        new_offers = offers_df[~offers_df()['slug'].isin(exiting_offers['slug'])]
-        new_offers.to_sql("offers", engine, if_exists='append', index=False)  # engine,
-    except:
-        print("Data already exists in the table offers")
+            offers_df = pd.DataFrame(offers_dict,
+                                     columns=['slug', 'title', 'workplace_type', 'experience_level', 'working_time',
+                                              'category_id', 'city', 'company_name', 'published_at'])
+            return offers_df
 
 
-    #table requiredSkills
-    #- slug from primary key
-    skills = item["requiredSkills"]
-    for skill in skills:
-        skill
+        try:
+            exiting_offers = pd.read_sql_query(exiting_offers_query, engine)
+            new_offers = offers()[~offers()['slug'].isin(exiting_offers['slug'])]
+            new_offers.to_sql("offers", engine, if_exists='append', index=False)  # engine,
+        except:
+            print("Data already exists in the table offers")
 
 
+        def skills():
+            slug = []
+            skill = []
+            o_slug = item.get("slug")
+            o_skills = item["requiredSkills"]
+            for i_skill in o_skills:
+                skill.append(i_skill)
+                slug.append(o_slug)
 
-    #table employmentTypes
-    employmentTypes = item["employmentTypes"]
-    for types in employmentTypes:
-        to = types["to"]
-        from_ = types["from"]
-        type = types["type"]
-        currency = types["currency"]
-        #- slug from primary key
+            skills_dict = {
+                'slug': slug,
+                'skill': skill
+            }
+            skills_df = pd.DataFrame(skills_dict, columns=['slug', 'skill'])
 
+            return skills_df
+        skills()
 
-    #table multilocation
-    multilocation = item["multilocation"]
-    for location in multilocation:
-        m_city = location["city"]
-        location_slug = location["slug"]
-        #- slug from primary key
+        try:
+            exiting_skills = pd.read_sql_query(exiting_skills_query, engine)
+            new_skills = skills()[~skills()['slug'].isin(exiting_skills['slug'])]
+            new_skills.to_sql("skills", engine, if_exists='append', index=False)  # engine,
+        except:
+            print("Data already exists in the table skills")
 
-    #table offers_life
-    #- slug
-    #- publishedAt
+        # table employmentTypes
+        def types():
+            slug = []
+            to_ = []
+            from_ = []
+            type = []
+            currency = []
+            o_slug = item.get("slug")
+            employment_types = item["employmentTypes"]
+            for types in employment_types:
+                o_to = types["to"]
+                o_from_ = types["from"]
+                o_type = types["type"]
+                o_currency = types["currency"]
+                slug.append(o_slug)
+                to_.append(o_to)
+                from_.append(o_from_)
+                type.append(o_type)
+                currency.append(o_currency)
+
+            types_dict = {
+                'slug': slug,
+                'to_': to_,
+                'from_': from_,
+                'type': type,
+                'currency': currency
+            }
+            types_df = pd.DataFrame(types_dict, columns=['slug', 'to_', 'from_', 'type', 'currency'])
+            return types_df
+        types().to_sql("types", engine, if_exists='append', index=False)
+        try:
+            exiting_types = pd.read_sql_query(exiting_types_query, engine)
+            new_types = types()[~types()['slug'].isin(exiting_types['slug'])]
+            new_types.to_sql("types", engine, if_exists='append', index=False)
+        except:
+            print("Data already exists in the table types")
+
+        def multilocation():
+            slug = []
+            multicity = []
+            location_slug = []
+            o_slug = item.get("slug")
+            multilocation = item["multilocation"]
+            for location in multilocation:
+                o_city = location["city"]
+                o_location_slug = location["slug"]
+                slug.append(o_slug)
+                multicity.append(o_city)
+                location_slug.append(o_location_slug)
+
+            multilocation_dict = {
+                'slug': slug,
+                'multicity': multicity,
+                'location_slug': location_slug
+            }
+            multilocation_df = pd.DataFrame(multilocation_dict, columns=['slug', 'multicity', 'location_slug'])
+            return multilocation_df
+        try:
+            exiting_multilocation = pd.read_sql_query(exiting_multilocation_query, engine)
+            new_locations = multilocation()[~multilocation()['slug'].isin(exiting_multilocation['slug'])]
+            new_locations.to_sql("multilocation", engine, if_exists='append', index=False)
+        except:
+            print("Data already exists in the table multilocation")
+
+        def offers_life():
+            slug = []
+            published_at = []
+            o_slug = item.get("slug")
+            slug.append(o_slug)
+            o_published_at = item["publishedAt"][:10]
+            published_at.append(o_published_at)
+
+            offers_life_dict = {
+                'slug': slug,
+                'published_at': published_at
+            }
+
+            offers_life_df = pd.DataFrame(offers_life_dict, columns=['slug', 'published_at'])
+            offers_life_df.to_sql("offers_life", engine, if_exists='append', index=False)
+            return offers_life_df
+        offers_life()
