@@ -2,7 +2,7 @@ name: Python application
 
 on:
   schedule:
-    - cron: '0 */24 * * *'
+    - cron: '0 */06 * * *'
     
 jobs:
   build:
@@ -19,7 +19,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
     - name: execute py script # run main.py
-      run: python main.py
+      run: python main2.py
     - name: commit files
       run: |
         git config --local user.email "action@github.com"
